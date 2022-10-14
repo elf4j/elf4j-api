@@ -59,7 +59,7 @@ enum LoggerFactoryProvider {
         }
         if (loggerFactories.size() == 1) {
             LoggerFactory provisionedLoggerFactory = loggerFactories.get(0);
-            utilLogger.log(Level.INFO, "provisioned JLF logger factory [{0}]", provisionedLoggerFactory);
+            utilLogger.log(Level.INFO, "provisioned ELF4J logger factory [{0}]", provisionedLoggerFactory);
             return provisionedLoggerFactory;
         }
         throw new IllegalStateException(

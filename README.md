@@ -77,10 +77,11 @@ public interface Logger {
 
 #### Sample usage
 
-Note that, once coding is done as in the sample, nothing will be logging out until you include a binding logging
-framework in the classpath. For a working implementation, you can use the binding JAR of
-the [tinylog ELF4J Service Provider](https://github.com/elf4j/elf4j-tinylog), and of course, together with
-the [tinylog](https://tinylog.org/v2/) JAR itself.
+Note: Once coding is done as in the sample, nothing will be logging out until you include a binding logging framework in
+the classpath. The [tinylog ELF4J Service Provider](https://github.com/elf4j/elf4j-tinylog) binding JAR can be used as a
+working example of the logging service provider, together with the [tinylog](https://tinylog.org/v2/) JAR itself. The
+application using this ELF4J API can decide to use any logging provider of the ELF4J SPI at deployment time, without any
+code change.
 
 ```
 class LoggerSample {
@@ -134,5 +135,15 @@ public interface LoggerFactory {
 
 #### Sample implementation
 
-Easier to do than it seems. See the reference implementation of
-the [tinylog ELF4J Service Provider](https://github.com/elf4j/elf4j-tinylog).
+Easier to do than it seems...
+
+Available logging service provider(s): 
+
+- [tinylog provider](https://github.com/elf4j/elf4j-tinylog)
+
+More providers to come:
+
+- log4j provider
+- Java util logging provider
+- logback provider
+- ...

@@ -2,7 +2,7 @@
 <!--
   ~ MIT License
   ~
-  ~ Copyright (c) 2022. Qingtian Wang
+  ~ Copyright (c) 2022 ELF4J
   ~
   ~ Permission is hereby granted, free of charge, to any person obtaining a copy
   ~ of this software and associated documentation files (the "Software"), to deal
@@ -44,7 +44,7 @@
         </license>
     </licenses>
     <scm>
-        <url>https://github.com/elf4j/elf4j-api</url>
+        <url>https://github.com/elf4j/elf4j-api/tree/master</url>
         <connection>
             scm:git:git://github.com:elf4j/elf4j-api.git
         </connection>
@@ -142,11 +142,11 @@
             <distributionManagement>
                 <snapshotRepository>
                     <id>ossrh</id>
-                    <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+                    <url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
                 </snapshotRepository>
                 <repository>
                     <id>ossrh</id>
-                    <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+                    <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
                 </repository>
             </distributionManagement>
         </profile>

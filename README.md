@@ -133,13 +133,12 @@ public interface LoggerFactory {
 }
 ```
 
-#### Sample implementation
+#### SPI implementations
 
-Easier to do than it seems...
+Available logging service providers:
 
-Available logging service provider(s): 
-
-- [tinylog provider](https://github.com/elf4j/elf4j-tinylog)
+- [tinylog provider](https://github.com/elf4j/elf4j-tinylog) as a reference implementation
+- ...
 
 More providers to come:
 

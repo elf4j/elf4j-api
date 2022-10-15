@@ -44,7 +44,7 @@
         </license>
     </licenses>
     <scm>
-        <url>https://github.com/elf4j/elf4j-api/tree/master</url>
+        <url>https://github.com/elf4j/elf4j-api/tree/main</url>
         <connection>
             scm:git:git://github.com:elf4j/elf4j-api.git
         </connection>

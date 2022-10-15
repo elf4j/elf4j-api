@@ -16,6 +16,8 @@ Java 8 or better
 
 ## Get it...
 
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.elf4j/elf4j-api.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.elf4j%22%20AND%20a:%22elf4j-api%22)
+
 ## Use it...
 
 Conventions, defaults, and implementation notes:

@@ -9,7 +9,7 @@ Easy Logging Facade for Java (ELF4J) API and SPI
 2. As a logging framework provider, I want to have
    a [Service Provider Interfaces (SPI)](https://docs.oracle.com/javase/tutorial/sound/SPI-intro.html) definition, so
    that the capabilities my independent logging framework can be discovered and bound to an application at its
-   deployment time through such SPI.
+   deployment time through such SPI mechanism.
 
 ## Prerequisite
 

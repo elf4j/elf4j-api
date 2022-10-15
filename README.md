@@ -143,6 +143,6 @@ Available logging service providers:
 More providers to come:
 
 - log4j provider
-- Java util logging provider
+- JDK1.4 util logging provider
 - logback provider
 - ...

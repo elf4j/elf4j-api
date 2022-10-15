@@ -121,9 +121,9 @@ class LoggerSample {
 
 #### The Service/Provider Interface
 
-In terms of the Java [SPI](https://docs.oracle.com/javase/tutorial/sound/SPI-intro.html) setup, in this simple scenario,
-the Service and Service Provider Interface is one and the same. The Service Provider should implement this interface
-such that the ELF4J client application can discover and load the implementation using
+In terms of the [Java SPI](https://docs.oracle.com/javase/tutorial/sound/SPI-intro.html) setup, the Service and Service
+Provider Interface in this simple case is one and the same. The service provider should implement this interface such
+that the ELF4J client application can discover and load the implementation using
 the [ServiceLoader](https://docs.oracle.com/javase/8/docs/api/java/util/ServiceLoader.html).
 
 ```

@@ -23,12 +23,21 @@
  *
  */
 
-package org.elf4j.spi;
+package elf4j.util;
 
-import org.elf4j.Logger;
+import elf4j.Logger;
+import elf4j.spi.LoggerFactory;
 
-public interface LoggerFactory {
-    Logger logger(String name);
+public enum NoopLoggerFactory implements LoggerFactory {
+    INSTANCE;
 
-    Logger logger(Class<?> clazz);
+    @Override
+    public Logger logger(String name) {
+        return NoopLogger.INSTANCE;
+    }
+
+    @Override
+    public Logger logger(Class<?> clazz) {
+        return clazz == null ? logger((String) null) : logger(clazz.getName());
+    }
 }

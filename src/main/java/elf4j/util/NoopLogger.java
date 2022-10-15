@@ -23,10 +23,10 @@
  *
  */
 
-package org.elf4j.util;
+package elf4j.util;
 
-import org.elf4j.Level;
-import org.elf4j.Logger;
+import elf4j.Level;
+import elf4j.Logger;
 
 import java.util.function.Supplier;
 

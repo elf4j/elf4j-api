@@ -23,10 +23,10 @@
  *
  */
 
-package org.elf4j;
+package elf4j;
 
-import org.elf4j.spi.LoggerFactory;
-import org.elf4j.util.NoopLoggerFactory;
+import elf4j.spi.LoggerFactory;
+import elf4j.util.NoopLoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;

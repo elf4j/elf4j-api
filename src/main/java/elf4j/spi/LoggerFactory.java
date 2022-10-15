@@ -23,26 +23,12 @@
  *
  */
 
-package org.elf4j;
+package elf4j.spi;
 
-import org.elf4j.util.NoopLogger;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import elf4j.Logger;
 
-import static org.junit.jupiter.api.Assertions.assertSame;
+public interface LoggerFactory {
+    Logger logger(String name);
 
-class WhenNoServiceProviderTest {
-
-    @Nested
-    class noServiceProvider {
-        @Test
-        void noopLogger() {
-            assertSame(NoopLogger.INSTANCE,
-                    Logger.instance(WhenNoServiceProviderTest.class),
-                    "noop logger instance should be in effect when there is no Service Provider discovered");
-            assertSame(NoopLogger.INSTANCE, Logger.instance("stubName"));
-            assertSame(NoopLogger.INSTANCE, Logger.instance((String) null));
-            assertSame(NoopLogger.INSTANCE, Logger.instance((Class<?>) null));
-        }
-    }
+    Logger logger(Class<?> clazz);
 }

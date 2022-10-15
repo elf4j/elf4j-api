@@ -23,50 +23,27 @@
  *
  */
 
-package org.elf4j;
+package elf4j;
 
-import java.util.function.Supplier;
+import elf4j.util.NoopLogger;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 
-public interface Logger {
-    static Logger instance(String name) {
-        return LoggerFactoryProvider.INSTANCE.loggerFactory().logger(name);
+import static org.junit.jupiter.api.Assertions.assertSame;
+
+class WhenNoServiceProviderTest {
+
+    @Nested
+    class noServiceProvider {
+        @Test
+        void noopLogger() {
+            Assertions.assertSame(NoopLogger.INSTANCE,
+                    Logger.instance(WhenNoServiceProviderTest.class),
+                    "noop logger instance should be in effect when there is no Service Provider discovered");
+            assertSame(NoopLogger.INSTANCE, Logger.instance("stubName"));
+            assertSame(NoopLogger.INSTANCE, Logger.instance((String) null));
+            assertSame(NoopLogger.INSTANCE, Logger.instance((Class<?>) null));
+        }
     }
-
-    static Logger instance(Class<?> clazz) {
-        return LoggerFactoryProvider.INSTANCE.loggerFactory().logger(clazz);
-    }
-
-    String getName();
-
-    Level getLevel();
-
-    Logger atLevel(Level level);
-
-    Logger atTrace();
-
-    Logger atDebug();
-
-    Logger atInfo();
-
-    Logger atWarn();
-
-    Logger atError();
-
-    void log(Object message);
-
-    void log(Supplier<?> message);
-
-    void log(String message, Object... args);
-
-    void log(String message, Supplier<?>... args);
-
-    void log(Throwable t);
-
-    void log(Throwable t, String message);
-
-    void log(Throwable t, Supplier<String> message);
-
-    void log(Throwable t, String message, Object... args);
-
-    void log(Throwable t, String message, Supplier<?>... args);
 }

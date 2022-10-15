@@ -29,10 +29,10 @@ Conventions, defaults, and implementation notes:
    extra `Logger` interface configuration method - such as `Logger placeholoder(String token)` similar
    to `Logger atLevel(Level level)` - was considered, and dropped in favor of simplicity.
 2. Thread safety: Any logger instance should be considered thread-safe by both the API user and the SPI provider.
-3. Logger name: To get a `Logger` instance, JLF simply passes through the user-supplied logger name to the service from
-   the SPI provider. If the API user ends up passing in `null`, the eventual name of the logger instance is undefined;
-   the provider may opt to supply a default. It is also up to the SPI provider to conduct sanitization (if any) on the
-   logger name for security concerns.
+3. Logger name: To get a `Logger` instance, ELF4J simply passes through the user-supplied logger name to the service
+   from the SPI provider. If the API user ends up passing in `null`, the eventual name of the logger instance is
+   undefined; the provider may opt to supply a default. It is also up to the SPI provider to conduct sanitization (if
+   any) on the logger name for security concerns.
 4. Log level: For each log action, the API user is expected to set the log level first, by using the
    fluent-style `atLevel(Level level)` method or one of the other no-arg shorthand equivalents. If the user omits such
    setting, the actual logging behavior is undefined; the SPI provider may opt to supply a default logging level.
@@ -78,8 +78,7 @@ public interface Logger {
 
 Note that, once coding is done as in the sample, nothing will be logging out until you include a binding logging
 framework in the classpath. For a working implementation, you can use the binding JAR of
-the [tinylog JLF Service Provider](), and of course, together with
-the [tinylog](https://tinylog.org/v2/) JAR itself.
+the [tinylog ELF4J Service Provider](), and of course, together with the [tinylog](https://tinylog.org/v2/) JAR itself.
 
 ```
 class LoggerSample {
@@ -121,7 +120,7 @@ class LoggerSample {
 
 In terms of the Java [SPI](https://docs.oracle.com/javase/tutorial/sound/SPI-intro.html) setup, in this simple scenario,
 the Service and Service Provider Interface is one and the same. The Service Provider should implement this interface
-such that the JLF client application can discover and load the implementation using
+such that the ELF4J client application can discover and load the implementation using
 the [ServiceLoader](https://docs.oracle.com/javase/8/docs/api/java/util/ServiceLoader.html).
 
 ```
@@ -133,4 +132,4 @@ public interface LoggerFactory {
 #### Sample implementation
 
 Easier to do than it seems. See the reference implementation of
-the [tinylog JLF Service Provider]().
+the [tinylog ELF4J Service Provider]().

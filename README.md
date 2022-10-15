@@ -79,7 +79,8 @@ public interface Logger {
 
 Note that, once coding is done as in the sample, nothing will be logging out until you include a binding logging
 framework in the classpath. For a working implementation, you can use the binding JAR of
-the [tinylog ELF4J Service Provider](), and of course, together with the [tinylog](https://tinylog.org/v2/) JAR itself.
+the [tinylog ELF4J Service Provider](https://github.com/elf4j/elf4j-tinylog), and of course, together with
+the [tinylog](https://tinylog.org/v2/) JAR itself.
 
 ```
 class LoggerSample {
@@ -127,6 +128,7 @@ the [ServiceLoader](https://docs.oracle.com/javase/8/docs/api/java/util/ServiceL
 ```
 public interface LoggerFactory {
     Logger logger(String name);
+    Logger logger(Class clazz);    
 }
 ```
 

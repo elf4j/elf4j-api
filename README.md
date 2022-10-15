@@ -132,4 +132,4 @@ public interface LoggerFactory {
 #### Sample implementation
 
 Easier to do than it seems. See the reference implementation of
-the [tinylog ELF4J Service Provider]().
+the [tinylog ELF4J Service Provider](https://github.com/elf4j/elf4j-tinylog).

@@ -23,12 +23,12 @@ Java 8 or better
 
 Conventions, defaults, and implementation notes:
 
-1. Placeholder token: For a better out-of-the-box user experience, the curly braces token `{}` is chosen to be the
-   placeholder for the log message arguments. This is by convention, and not coded as part of the API/SPI. Both the API
-   user and the SPI provider must honor such convention. If the native logging framework uses different placeholder
-   token(s), the SPI provider must take care of the token conversion. A more flexible design option of adding an
-   extra `Logger` interface configuration method - such as `Logger placeholoder(String token)` similar
-   to `Logger atLevel(Level level)` - was considered, and dropped in favor of simplicity.
+1. Placeholder token: For a better out-of-the-box user experience, the empty curly braces token - `{}` - is chosen to be
+   the placeholder for the log message arguments. This is by convention, and does not syntactically appear in the
+   API/SPI. Both the API user and the SPI provider must honor such convention. If the native logging framework uses
+   different placeholder token(s), the SPI provider must take care of the token conversion. A more flexible design
+   option of adding another fluent-style method on the `Logger` interface to configure the placeholder token was
+   considered, and dropped in favor of simplicity.
 2. Thread safety: Any logger instance should be considered thread-safe by both the API user and the SPI provider. This
    applies, even and especially, to those logger instances returned by the fluent-style `Logger.atXyz(...)` methods.
 3. Logger name: To get a `Logger` instance, ELF4J simply passes through the user-supplied logger name to the service

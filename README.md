@@ -138,11 +138,11 @@ public interface LoggerFactory {
 Available logging service providers:
 
 - [tinylog provider](https://github.com/elf4j/elf4j-tinylog) as a reference implementation
+- [log4j provider](https://github.com/elf4j/elf4j-log4j)
 - ...
 
 More providers to come:
 
-- log4j provider
 - JDK1.4 util logging provider
 - logback provider
 - ...

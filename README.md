@@ -32,7 +32,7 @@ Conventions, defaults, and implementation notes:
 2. Thread safety: Any logger instance should be considered thread-safe by both the API user and the SPI provider. This
    applies, even and especially, to those logger instances returned by the fluent-style `Logger.atXyz(...)` methods.
 3. Logger name: To get a `Logger` instance, ELF4J simply passes through the user-supplied logger name to the service
-   from the SPI provider. If the API user ends up passing in `null` or uses the no-arg `instance()` method to get a
+   of the SPI provider. If the API user ends up passing in `null` or uses the no-arg `instance()` method to get a
    logger, then the eventual name of the logger instance is undefined; the provider may opt to supply a default, e.g.
    the name of the caller class. It is also up to the SPI provider to conduct sanitization (if any) on the logger name
    for security concerns.

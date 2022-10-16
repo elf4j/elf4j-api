@@ -47,6 +47,10 @@ type `Logger` are chain-able Intermediate/configuration operations.
 
 ```
 public interface Logger {
+   static Logger instance() {
+        return LoggerFactoryProvider.INSTANCE.loggerFactory().logger();
+    }
+    
     static Logger instance(String name) {
         return LoggerFactoryProvider.INSTANCE.loggerFactory().logger(name);
     }
@@ -128,6 +132,7 @@ the [ServiceLoader](https://docs.oracle.com/javase/8/docs/api/java/util/ServiceL
 
 ```
 public interface LoggerFactory {
+    Logger logger();
     Logger logger(String name);
     Logger logger(Class clazz);    
 }

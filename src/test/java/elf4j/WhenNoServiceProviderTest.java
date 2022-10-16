@@ -44,6 +44,7 @@ class WhenNoServiceProviderTest {
             assertSame(NoopLogger.INSTANCE, Logger.instance("stubName"));
             assertSame(NoopLogger.INSTANCE, Logger.instance((String) null));
             assertSame(NoopLogger.INSTANCE, Logger.instance((Class<?>) null));
+            assertSame(NoopLogger.INSTANCE, Logger.instance());
         }
     }
 }

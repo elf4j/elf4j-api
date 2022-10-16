@@ -32,12 +32,17 @@ public enum NoopLoggerFactory implements LoggerFactory {
     INSTANCE;
 
     @Override
+    public Logger logger() {
+        return NoopLogger.INSTANCE;
+    }
+
+    @Override
     public Logger logger(String name) {
         return NoopLogger.INSTANCE;
     }
 
     @Override
     public Logger logger(Class<?> clazz) {
-        return clazz == null ? logger((String) null) : logger(clazz.getName());
+        return NoopLogger.INSTANCE;
     }
 }

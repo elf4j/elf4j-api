@@ -28,6 +28,8 @@ package elf4j.spi;
 import elf4j.Logger;
 
 public interface LoggerFactory {
+    Logger logger();
+
     Logger logger(String name);
 
     Logger logger(Class<?> clazz);

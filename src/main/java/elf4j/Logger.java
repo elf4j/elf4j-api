@@ -28,6 +28,10 @@ package elf4j;
 import java.util.function.Supplier;
 
 public interface Logger {
+    static Logger instance() {
+        return LoggerFactoryProvider.INSTANCE.loggerFactory().logger();
+    }
+
     static Logger instance(String name) {
         return LoggerFactoryProvider.INSTANCE.loggerFactory().logger(name);
     }

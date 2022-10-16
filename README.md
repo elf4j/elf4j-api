@@ -23,12 +23,10 @@ Java 8 or better
 
 Conventions, defaults, and implementation notes:
 
-1. Placeholder token: For a better out-of-the-box user experience, the empty curly braces token - `{}` - is chosen to be
-   the placeholder for the log message arguments. This is by convention, and does not syntactically appear in the
-   API/SPI. Both the API user and the SPI provider must honor such convention. If the native logging framework uses
-   different placeholder token(s), the SPI provider must take care of the token conversion. A more flexible design
-   option of adding another fluent-style method on the `Logger` interface to configure the placeholder token was
-   considered, and dropped in favor of simplicity.
+1. Placeholder token: For a better out-of-the-box user experience, the empty curly braces token `{}` is chosen to be the
+   placeholder for the log message arguments. This is by convention, and does not syntactically appear in the API/SPI.
+   Both the API user and the SPI provider must honor such convention. If the native logging framework uses different
+   placeholder token(s), the SPI provider must take care of the token conversion.
 2. Thread safety: Any logger instance should be considered thread-safe by both the API user and the SPI provider. This
    applies, even and especially, to those logger instances returned by the fluent-style `Logger.atXyz(...)` methods.
 3. Logger name: To get a `Logger` instance, ELF4J simply passes through the user-supplied logger name to the service
@@ -87,7 +85,8 @@ Note: Once coding is done as in the sample, nothing will be logging out until yo
 the classpath. The [tinylog ELF4J Service Provider](https://github.com/elf4j/elf4j-tinylog) binding JAR can be used as a
 working example of the logging service provider, together with the [tinylog](https://tinylog.org/v2/) JAR itself. The
 application using this ELF4J API can opt to use
-any logging provider (e.g. the [LOG4J provider](https://github.com/elf4j/elf4j-log4j)) of the ELF4J SPI at deployment time,
+any logging provider (e.g. the [LOG4J provider](https://github.com/elf4j/elf4j-log4j)) of the ELF4J SPI at deployment
+time,
 without any code change.
 
 ```

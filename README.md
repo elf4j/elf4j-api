@@ -29,7 +29,8 @@ Conventions, defaults, and implementation notes:
    token(s), the SPI provider must take care of the token conversion. A more flexible design option of adding an
    extra `Logger` interface configuration method - such as `Logger placeholoder(String token)` similar
    to `Logger atLevel(Level level)` - was considered, and dropped in favor of simplicity.
-2. Thread safety: Any logger instance should be considered thread-safe by both the API user and the SPI provider.
+2. Thread safety: Any logger instance should be considered thread-safe by both the API user and the SPI provider. This
+   applies, even and especially, to those logger instances returned by the fluent-style `Logger.atXyz(...)` methods.
 3. Logger name: To get a `Logger` instance, ELF4J simply passes through the user-supplied logger name to the service
    from the SPI provider. If the API user ends up passing in `null` or uses the no-arg `instance()` method to get a
    logger, then the eventual name of the logger instance is undefined; the provider may opt to supply a default, e.g.

@@ -87,7 +87,7 @@ Note: Once coding is done as in the sample, nothing will be logging out until yo
 the classpath. The [tinylog ELF4J Service Provider](https://github.com/elf4j/elf4j-tinylog) binding JAR can be used as a
 working example of the logging service provider, together with the [tinylog](https://tinylog.org/v2/) JAR itself. The
 application using this ELF4J API can opt to use
-any logging provider (e.g. [LOG4J provider](https://github.com/elf4j/elf4j-log4j)) of the ELF4J SPI at deployment time,
+any logging provider (e.g. the [LOG4J provider](https://github.com/elf4j/elf4j-log4j)) of the ELF4J SPI at deployment time,
 without any code change.
 
 ```

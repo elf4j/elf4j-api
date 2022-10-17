@@ -34,8 +34,8 @@ Conventions, defaults, and implementation notes:
    logger, then the eventual name of the logger instance is undefined; the provider may opt to supply a default, e.g.
    the name of the caller class. It is also up to the SPI provider to conduct sanitization (if any) on the logger name
    for security concerns.
-4. Log level: Before every eventual log action, the API user is expected to set the log level first, by using the
-   fluent-style `atLevel(Level level)` method or one of the other no-arg shorthand equivalents. If the user omits such
+4. Log level: Before every eventual log action, the API user is expected to set the log level by using the
+   fluent-style `atLevel(Level level)` method or one of the no-arg shorthand equivalents. If the user omits such
    setting, the actual logging behavior is undefined; the SPI provider may opt to supply a default logging level.
 
 ### The client API

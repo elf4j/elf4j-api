@@ -49,34 +49,34 @@ type `Logger` are chain-able Intermediate/configuration operations.
 ```
 public interface Logger {
    static Logger instance() {
-        return LoggerFactoryProvider.INSTANCE.loggerFactory().logger();
-    }
-    
-    static Logger instance(String name) {
-        return LoggerFactoryProvider.INSTANCE.loggerFactory().logger(name);
-    }
-
-    static Logger instance(Class<?> clazz) {
-        return LoggerFactoryProvider.INSTANCE.loggerFactory().logger(clazz);
-    }
-    
-    String getName();
-    Level getLevel();
-    Logger atLevel(Level level);
-    Logger atTrace();
-    Logger atDebug();
-    Logger atInfo();
-    Logger atWarn();
-    Logger atError();
-    void log(Object message);
-    void log(Supplier<?> message);
-    void log(String message, Object... args);
-    void log(String message, Supplier<?>... args);
-    void log(Throwable t);
-    void log(Throwable t, String message);
-    void log(Throwable t, Supplier<String> message);
-    void log(Throwable t, String message, Object... args);
-    void log(Throwable t, String message, Supplier<?>... args);
+      return LoggerFactoryProvider.INSTANCE.loggerFactory().logger();
+   }
+   
+   static Logger instance(String name) {
+      return LoggerFactoryProvider.INSTANCE.loggerFactory().logger(name);
+   }
+   
+   static Logger instance(Class<?> clazz) {
+      return LoggerFactoryProvider.INSTANCE.loggerFactory().logger(clazz);
+   }
+   
+   String getName();
+   Level getLevel();
+   Logger atLevel(Level level);
+   Logger atTrace();
+   Logger atDebug();
+   Logger atInfo();
+   Logger atWarn();
+   Logger atError();
+   void log(Object message);
+   void log(Supplier<?> message);
+   void log(String message, Object... args);
+   void log(String message, Supplier<?>... args);
+   void log(Throwable t);
+   void log(Throwable t, String message);
+   void log(Throwable t, Supplier<String> message);
+   void log(Throwable t, String message, Object... args);
+   void log(Throwable t, String message, Supplier<?>... args);
 }
 ```
 
@@ -97,30 +97,30 @@ class LoggerSample {
 
    @Test
    void messageAndArgs() {
-
-      LOGGER.atInfo().log("info message"); 
-
+      LOGGER.atInfo().log("info message");
       LOGGER.atLevel(Level.INFO).log("{} is a shorthand of {}", "atInfo()", "atLevel(Level.INFO)");
+      LOGGER.atWarn().log("warn message with supplier arg1 {}, arg2 {}, arg3 {}",
+            () -> "a11111",
+            () -> "a22222",
+            () -> Arrays.stream(new Object[] { "a33333" }).collect(Collectors.toList()));
    }
-
-   @Test
-   void messageAndSuppliers() {
-      LOGGER.atWarn()
-            .log("warn message with supplier arg1 {}, arg2 {}, arg3 {}",
-                  () -> "a11111",
-                  () -> "a22222",
-                  () -> Arrays.stream(new Object[] { "a33333" }).collect(Collectors.toList()));
-   }
-
+   
    @Test
    void throwableAndMessageAndArgs() {
-      LOGGER.atError()
-            .log(new Exception("ex message"), 
-                  "log message with arg1 {}, arg2 {}, arg3 {}", 
-                  "a11111", 
-                  Arrays.asList("a22222"),
-                  "a33333");
-   }   
+      Logger logger = LOGGER.atError();
+      logger.log("level set omitted, this log's level is Level.ERROR");
+      Throwable ex = new Exception("ex message");
+      logger.log(ex);
+      logger.atWarn().log(ex, "this log's level switched to WARN on the fly");
+      logger.log(ex,
+            "this log's level is now {} if the SPI provider opts to make the logger instance {}",
+            "Level.ERROR",
+            "immutable");
+      logger.atInfo().log("set the {} before the {} inside the same {} logging statement to be certain",
+            "Level",
+            "final .log(...) call",
+            "fluent-style");
+   }
    ...
 }
 ```

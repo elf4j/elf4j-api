@@ -23,17 +23,18 @@ Java 8 or better
 
 Conventions, defaults, and implementation notes:
 
-1. Placeholder token: The empty curly braces token `{}` is chosen to be the
-   placeholder for the log message arguments. This is by convention, and does not syntactically appear in the API or SPI.
-   Both the API user and the SPI provider must honor such convention. If the native logging framework uses different
-   placeholder token(s), the SPI provider must take care of the token conversion.
+1. Placeholder token: The empty curly braces token `{}` is chosen to be the placeholder for the log message arguments.
+   This is by convention, and does not syntactically appear in the API or SPI. Both the API user and the SPI provider
+   must honor such convention. If the native logging framework uses different placeholder token(s), the SPI provider
+   must take care of the token conversion.
 2. Thread safety: Any logger instance should be considered thread-safe by both the API user and the SPI provider. This
-   applies, even and especially, to those logger instances returned by the fluent-style `Logger.atXyz(...)` methods.
-3. Logger name: To get a `Logger` instance, ELF4J simply passes through the user-supplied logger name to the service
-   of the SPI provider. If the API user ends up passing in `null` or uses the no-arg `instance()` method to get a
-   logger, then the eventual name of the logger instance is undefined; the provider may opt to supply a default, e.g.
-   the name of the caller class. It is also up to the SPI provider whether to conduct any sanitization on the logger name
-   for security concerns.
+   applies, even and especially, to those logger instances returned by the fluent-style `Logger.atZzz(...)` methods. The
+   SPI provider e.g. can opt to achieve this by making the `Logger` implementation immutable.
+3. Logger name: To get a `Logger` instance, ELF4J simply passes through the user-supplied logger name to the SPI
+   provider. If the API user ends up passing in `null` or uses the no-arg `instance()` method to get a logger, then the
+   name of the logger instance is undefined; the provider may opt to supply a default, e.g. the name of the caller
+   class. It is also up to the SPI provider whether to conduct any sanitization on the logger name for security
+   concerns.
 4. Log level: Before every eventual log action, the API user is expected to set the log level by using the
    fluent-style `atLevel(Level level)` method or one of the no-arg shorthand equivalents. If the user omits such
    setting, the actual logging behavior is undefined; the SPI provider may opt to supply a default logging level.
@@ -97,10 +98,9 @@ class LoggerSample {
    @Test
    void messageAndArgs() {
 
-      LOGGER.atInfo().log("info message no args"); 
+      LOGGER.atInfo().log("info message"); 
 
-      // .atInfo() is a shorthand equivalent of .atLevel(Level.INFO)
-      LOGGER.atInfo().log("info message with arg1 {}, arg2 {}", "a11111", new Object());
+      LOGGER.atLevel(Level.INFO).log("{} is a shorthand of {}", "atInfo()", "atLevel(Level.INFO)");
    }
 
    @Test
@@ -116,11 +116,13 @@ class LoggerSample {
    void throwableAndMessageAndArgs() {
       LOGGER.atError()
             .log(new Exception("ex message"), 
-                  "log message with arg1 {}, arg2 {}", 
+                  "log message with arg1 {}, arg2 {}, arg3 {}", 
                   "a11111", 
-                  new Object[]{ "a22222" });
+                  Arrays.asList("a22222"),
+                  "a33333");
    }   
    ...
+}
 ```
 
 ### The provider SPI

@@ -120,6 +120,12 @@ class LoggerSample {
             "Level",
             "final .log(...) call",
             "fluent-style");
+      logger.atError().log(ex,
+            "now logging some expensive items to compute, together with ex stack trace: item1 {}, item2 {}, item3 {}, item4 {}, ...",
+            () -> "i11111",
+            () -> "i22222",
+            () -> Arrays.asList("i33333"),
+            () -> Arrays.stream(new Object[] { "i44444" }).collect(Collectors.toList()));
    }
    ...
 }

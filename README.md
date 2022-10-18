@@ -147,7 +147,7 @@ the [ServiceLoader](https://docs.oracle.com/javase/8/docs/api/java/util/ServiceL
 public interface LoggerFactory {
     Logger logger();
     Logger logger(String name);
-    Logger logger(Class clazz);    
+    Logger logger(Class<?> clazz);    
 }
 ```
 

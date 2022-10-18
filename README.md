@@ -111,7 +111,12 @@ class readmeSamples {
       Logger errorLogger = logger.atError();
       errorLogger.log("level set omitted, the log level is Level.ERROR");
       Throwable ex = new Exception("ex message");
-      errorLogger.atWarn().log(ex, "the log level switched to WARN on the fly");
+      errorLogger.atWarn().log(ex, 
+                              "the log level switched to WARN on the fly. that is, {} returns a {} and {} Logger {}",
+                              "atWarn()",
+                              "different",
+                              "immutable",
+                              "instance");
       errorLogger.atError()
               .log(ex,
                       "the {} is {} here because the {} instance is {}, and the instance log level is already {}",

@@ -29,7 +29,7 @@ Conventions, defaults, and implementation notes:
    must take care of the token conversion.
 2. Immutability: A `Logger` instance is expected to be immutable, thus thread-safe, by both the API user and the SPI
    provider. This applies, even and especially, to those instances returned by the fluent-style `Logger.atZzz(...)`
-   methods. A valid SPI implementation must fulfil such semantics.
+   methods. A valid SPI implementation must fulfil the immutability semantics.
 3. Logger name: To get a `Logger` instance, ELF4J simply passes through the user-supplied logger name to the SPI
    provider. If the API user ends up passing in `null` or uses the no-arg `instance()` method to get a logger, then the
    name of the logger instance is undefined; the provider may opt to supply a default, e.g. the name of the caller

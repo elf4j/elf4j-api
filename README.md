@@ -83,7 +83,7 @@ public interface Logger {
 #### Sample usage
 
 Note: Once coding is done as in the sample, nothing will be logging out until you include an ELF4J logging
-provider binding JAR in the classpath. The [tinylog ELF4J provider](https://github.com/elf4j/elf4j-tinylog) 
+provider binding JAR in the classpath. The [tinylog provider](https://github.com/elf4j/elf4j-tinylog) 
 binding JAR can be used as a working reference implementation, together with the 
 [tinylog](https://tinylog.org/v2/) JAR itself. The application using this ELF4J API can opt to use
 any such logging provider (e.g. the [LOG4J provider](https://github.com/elf4j/elf4j-log4j)) of the ELF4J 

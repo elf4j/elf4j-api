@@ -109,8 +109,8 @@ class readmeSamples {
    void throwableAndMessageAndArgs() {
       logger.atInfo().log("let see immutability in action...");
       Logger errorLogger = logger.atError();
-      errorLogger.log("level set omitted, the log level is Level.ERROR");
       Throwable ex = new Exception("ex message");
+      errorLogger.log(ex, "level set omitted, the log level is Level.ERROR");
       errorLogger.atWarn().log(ex, 
                               "the log level switched to WARN on the fly. that is, {} returns a {} and {} Logger {}",
                               "atWarn()",

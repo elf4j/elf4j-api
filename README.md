@@ -107,11 +107,11 @@ class readmeSamples {
    
    @Test
    void throwableAndMessageAndArgs() {
-      this.logger.atInfo().log("let see immutability in action...");
-      Logger errorLogger = this.logger.atError();
-      errorLogger.log("level set omitted, the log's level is Level.ERROR");
+      logger.atInfo().log("let see immutability in action...");
+      Logger errorLogger = logger.atError();
+      errorLogger.log("level set omitted, the log level is Level.ERROR");
       Throwable ex = new Exception("ex message");
-      errorLogger.atWarn().log(ex, "the log's level switched to WARN on the fly");
+      errorLogger.atWarn().log(ex, "the log level switched to WARN on the fly");
       errorLogger.atError()
               .log(ex,
                       "the {} is {} here because the {} instance is {}, and the instance log level is already {}",

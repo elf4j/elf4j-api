@@ -4,8 +4,8 @@ Easy Logging Facade for Java (ELF4J) API and SPI
 
 ## User stories
 
-1. As an application developer, I want to program my application logs against an API, so that the run-time logging
-   implementation can be discovered and loaded when my application deploys without code change.
+1. As an application developer, I want to program my application against a logging API, so that I can choose or 
+   change the actual logging implementation at the deployment time of my application without code change.
 2. As a logging framework provider, I want to have
    a [Service Provider Interfaces (SPI)](https://docs.oracle.com/javase/tutorial/sound/SPI-intro.html) definition, so
    that my independent logging framework can be discovered and bound to an application at the deployment time through

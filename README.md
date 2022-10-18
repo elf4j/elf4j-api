@@ -27,9 +27,9 @@ Conventions, defaults, and implementation notes:
    This is by convention, and does not syntactically appear in the API or SPI. Both the API user and the SPI provider
    must honor such convention. If the native logging framework uses different placeholder token(s), the SPI provider
    must take care of the token conversion.
-2. Thread safety: Any logger instance should be considered thread-safe by both the API user and the SPI provider. This
-   applies, even and especially, to those logger instances returned by the fluent-style `Logger.atZzz(...)` methods. The
-   SPI provider e.g. can opt to achieve this by making the `Logger` implementation immutable.
+2. Immutability: A `Logger` instance is expected to be immutable, thus thread-safe, by both the API user and the SPI
+   provider. This applies, even and especially, to those instances returned by the fluent-style `Logger.atZzz(...)`
+   methods. A valid SPI implementation must fulfil such semantics.
 3. Logger name: To get a `Logger` instance, ELF4J simply passes through the user-supplied logger name to the SPI
    provider. If the API user ends up passing in `null` or uses the no-arg `instance()` method to get a logger, then the
    name of the logger instance is undefined; the provider may opt to supply a default, e.g. the name of the caller
@@ -91,43 +91,42 @@ time,
 without any code change.
 
 ```
-class LoggerSample {
-
-   private static final Logger LOGGER = Logger.instance(LoggerSample.class);
-
+class readmeSamples {
+   private final Logger logger = Logger.instance(readmeSamples.class);
+   
    @Test
    void messageAndArgs() {
-      LOGGER.atInfo().log("info message");
-      LOGGER.atLevel(Level.INFO).log("{} is a shorthand of {}", "atInfo()", "atLevel(Level.INFO)");
-      LOGGER.atWarn().log("warn message with supplier arg1 {}, arg2 {}, arg3 {}",
-            () -> "a11111",
-            () -> "a22222",
-            () -> Arrays.stream(new Object[] { "a33333" }).collect(Collectors.toList()));
+      logger.atInfo().log("info message");
+      logger.atLevel(Level.INFO).log("{} is a shorthand of {}", "atInfo()", "atLevel(Level.INFO)");
+      logger.atWarn()
+              .log("warn message with supplier arg1 {}, arg2 {}, arg3 {}",
+                      () -> "a11111",
+                      () -> "a22222",
+                      () -> Arrays.stream(new Object[] { "a33333" }).collect(Collectors.toList()));
    }
    
    @Test
    void throwableAndMessageAndArgs() {
-      Logger logger = LOGGER.atError();
-      logger.log("level set omitted, this log's level is Level.ERROR");
+      this.logger.atInfo().log("let see immutability in action...");
+      Logger errorLogger = this.logger.atError();
+      errorLogger.log("level set omitted, the log's level is Level.ERROR");
       Throwable ex = new Exception("ex message");
-      logger.log(ex);
-      logger.atWarn().log(ex, "this log's level switched to WARN on the fly");
-      logger.log(ex,
-            "this log's level is now {} if the SPI provider opts to make the logger instance {}",
-            "Level.ERROR",
-            "immutable");
-      logger.atInfo().log("set the {} before the {} inside the same {} logging statement to be certain",
-            "Level",
-            "final .log(...) call",
-            "fluent-style");
-      logger.atError().log(ex,
-            "now logging some expensive items to compute, together with ex stack trace: item1 {}, item2 {}, item3 {}, item4 {}, ...",
-            () -> "i11111",
-            () -> "i22222",
-            () -> Arrays.asList("i33333"),
-            () -> Arrays.stream(new Object[] { "i44444" }).collect(Collectors.toList()));
+      errorLogger.atWarn().log(ex, "the log's level switched to WARN on the fly");
+      errorLogger.atError()
+              .log(ex,
+                      "the {} is {} here because the {} instance is {}, and the instance log level is already {}",
+                      "atError() call",
+                      "unnecessary",
+                      "errorLogger",
+                      "immutable",
+                      "Level.ERROR");
+      errorLogger.log(ex,
+              "now at Level.ERROR together with the exception stack trace, logging some expensive items to compute: item1 {}, item2 {}, item3 {}, item4 {}, ...",
+              () -> "i11111",
+              () -> "i22222",
+              () -> Arrays.asList("i33333"),
+              () -> Arrays.stream(new Object[] { "i44444" }).collect(Collectors.toList()));
    }
-   ...
 }
 ```
 

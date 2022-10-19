@@ -106,7 +106,7 @@ class readmeSamples {
    
    @Test
    void throwableAndMessageAndArgs() {
-      logger.atInfo().log("let see immutability in action...");
+      logger.atInfo().log("let's see logger immutability in action...");
       Logger errorLogger = logger.atError();
       Throwable ex = new Exception("ex message");
       errorLogger.log(ex, "level set omitted, the log level is Level.ERROR");

@@ -118,7 +118,7 @@ class readmeSamples {
                               "instance");
       errorLogger.atError()
               .log(ex,
-                     "the atError() call is {} here because the errorLogger instance is {}, and the instance log level is already Level.ERROR",
+                     "the atError() call is {} because the errorLogger instance is {}, and the instance's log level has always been Level.ERROR",
                      "unnecessary",
                      "immutable");
       errorLogger.log(ex,

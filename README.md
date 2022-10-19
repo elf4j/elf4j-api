@@ -32,8 +32,8 @@ Conventions, defaults, and implementation notes:
    the fluent-style `Logger.atZzz(...)` methods.
 3. Logger name: To get a `Logger` instance, ELF4J simply passes through the user-supplied logger name to the SPI
    provider. If the API user ends up passing in `null` or uses the no-arg `instance()` method to get a logger, then the
-   name of the logger instance is undefined by ELF4J; the provider may opt to supply a default, e.g. the name of the
-   caller class. It is also up to the SPI provider whether to conduct any sanitization on the logger name for security
+   name of the logger instance is undefined; the provider may opt to supply a default, e.g. the name of the caller
+   class. It is also up to the SPI provider whether to conduct any sanitization on the logger name for security
    concerns.
 4. Log level: Before an eventual log action, if the API user omits to set the log level by using the
    fluent-style `atLevel(Level level)` method or one of the no-arg shorthand equivalents, then the actual logging

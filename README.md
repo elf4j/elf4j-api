@@ -1,6 +1,6 @@
 # elf4j-api
 
-Easy Logging Facade for Java (ELF4J) API and SPI
+Easy Logging Facade for Java (ELF4J) - API and SPI
 
 ## User stories
 

@@ -159,6 +159,6 @@ Available logging service providers:
 
 More providers to come:
 
-- JDK1.4 util logging provider
+- JDK util logging (JUL) provider
 - logback provider
 - ...

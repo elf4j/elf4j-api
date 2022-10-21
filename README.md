@@ -27,17 +27,17 @@ Conventions, defaults, and implementation notes:
    This is by convention, and does not syntactically appear in the API or SPI. Both the API user and the SPI provider
    must honor such convention. If the native logging framework uses different placeholder token(s), the SPI provider
    must take care of the token conversion.
-2. Immutability: The API user can assume that any `Logger` instance is immutable, thus thread-safe. Therefore, the SPI
-   provider must supply such immutability semantics. This applies, even and especially, to those instances returned by
-   the fluent-style `Logger.atZzz(...)` methods.
-3. Logger name: To get a `Logger` instance, ELF4J simply passes through the user-supplied logger name to the SPI
-   provider. It is up to the SPI provider whether to honor the passed-in name as-is. E.g. the provider may opt to
+2. Immutability: An ELF4J `Logger` instance must be assumed immutable, thus thread-safe, by both the API client 
+   and the SPI provider. This applies, even and especially, to those instances returned by the fluent-style
+   `Logger.atZzz(...)` methods.
+3. Logger name: To get an ELF4J `Logger` instance, the API user-supplied name or class is passed to the SPI
+   provider as-is. It is up to the SPI provider how to use the passed-in name/class. E.g. the provider may opt to
    conduct sanitization on the logger name for security concerns. If the API user ends up passing in `null` or 
    uses the no-arg `instance()` method to get a logger, then the name of the logger instance is undefined; the 
    provider may opt to supply a default, e.g. the name of the caller class. 
-4. Log level: Before an eventual log action, if the API user omits to set the log level by using the
-   fluent-style `atLevel(Level level)` method or one of the no-arg shorthand equivalents, then the actual logging
-   behavior is undefined; the SPI provider may opt to supply a default logging level.
+4. Log level: If the API user does not set the log level by using the fluent-style `atLevel(Level level)` method
+   or one of the no-arg shorthand equivalents, then the actual logging behavior is undefined; the SPI provider
+   may opt to supply a default logging level.
 
 ### The client API
 

@@ -82,13 +82,13 @@ public interface Logger {
 
 #### Sample usage
 
-Note that ELF4J is a facade, rather than implementation, for logging. As such, nothing will be 
+Note that ELF4J is a facade, rather than implementation. As such, nothing will be 
 logging out until you include an ELF4J logging provider JAR in the classpath. 
 The [tinylog provider](https://github.com/elf4j/elf4j-tinylog) binding JAR can be used as a working
 reference implementation, together with the [tinylog](https://tinylog.org/v2/) JAR itself. 
-The API client application can select or change to use any such logging provider 
-(e.g. the [LOG4J provider](https://github.com/elf4j/elf4j-log4j)) of the ELF4J SPI at deployment 
-time, without any code change.
+The ELF4J API client can select or change to use any such logging provider 
+(e.g. the [LOG4J provider](https://github.com/elf4j/elf4j-log4j)) of the ELF4J SPI, at application
+deployment time, without any code change.
 
 ```
 class readmeSamples {

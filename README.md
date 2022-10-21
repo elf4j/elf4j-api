@@ -30,10 +30,10 @@ Conventions, defaults, and implementation notes:
 2. Immutability: An ELF4J `Logger` instance must be assumed immutable, thus thread-safe, by both the API client 
    and the SPI provider. This applies, even and especially, to those instances returned by the fluent-style
    `Logger.atZzz(...)` methods.
-3. Logger name: To get an ELF4J `Logger` instance, the API user-supplied name or class is passed to the SPI
-   provider as-is. It is up to the SPI provider how to use the passed-in name/class. E.g. the provider may opt to
-   conduct sanitization on the logger name for security concerns. If the API user ends up passing in `null` or 
-   uses the no-arg `instance()` method to get a logger, then the name of the logger instance is undefined; the 
+3. Logger name: To get an ELF4J `Logger` instance, the API user may supply an associated name or class. It is up to
+   the SPI provider how to use the passed-in value. E.g. the provider may opt to
+   conduct sanitization on the passed-in name for security concerns. If the API user ends up passing in `null` or 
+   using the no-arg `instance()` method to get a logger, then the name of the logger instance is undefined; the 
    provider may opt to supply a default, e.g. the name of the caller class. 
 4. Log level: If the API user does not set the log level by using the fluent-style `atLevel(Level level)` method
    or one of the no-arg shorthand equivalents, then the actual logging behavior is undefined; the SPI provider

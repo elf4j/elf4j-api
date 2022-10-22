@@ -1,11 +1,11 @@
 # elf4j-api
 
-Easy Logging Facade for Java (ELF4J) API and SPI
+Easy Logging Facade for Java (ELF4J) - API and SPI
 
 ## User stories
 
-1. As an application developer, I want to program my application against a logging API, so that I can choose or
-   change the actual logging implementation at the deployment time of my application without code change.
+1. As an application developer, I want to program logs of my application against an API, so that I can choose or
+   change the actual logging implementation at the application deployment time without code change.
 2. As a logging framework provider, I want to have
    a [Service Provider Interfaces (SPI)](https://docs.oracle.com/javase/tutorial/sound/SPI-intro.html) definition, so
    that my independent logging framework can be discovered and bound to an application at the deployment time through
@@ -27,17 +27,17 @@ Conventions, defaults, and implementation notes:
    This is by convention, and does not syntactically appear in the API or SPI. Both the API user and the SPI provider
    must honor such convention. If the native logging framework uses different placeholder token(s), the SPI provider
    must take care of the token conversion.
-2. Immutability: The API user can assume that any `Logger` instance is immutable, thus thread-safe. Therefore, the SPI
-   provider must supply such immutability semantics. This applies, even and especially, to those instances returned by
-   the fluent-style `Logger.atZzz(...)` methods.
-3. Logger name: To get a `Logger` instance, ELF4J simply passes through the user-supplied logger name to the SPI
-   provider. If the API user ends up passing in `null` or uses the no-arg `instance()` method to get a logger, then the
-   name of the logger instance is undefined; the provider may opt to supply a default, e.g. the name of the caller
-   class. It is also up to the SPI provider whether to conduct any sanitization on the logger name for security
-   concerns.
-4. Log level: Before an eventual log action, if the API user omits to set the log level by using the
-   fluent-style `atLevel(Level level)` method or one of the no-arg shorthand equivalents, then the actual logging
-   behavior is undefined; the SPI provider may opt to supply a default logging level.
+2. Immutability: An ELF4J `Logger` instance must be assumed immutable, thus thread-safe, by both the API client 
+   and the SPI provider. This applies, even and especially, to those instances returned by the fluent-style
+   `Logger.atZzz(...)` methods.
+3. Logger name: To get an ELF4J `Logger` instance, the API user may supply an associated name or class. It is up to
+   the SPI provider how to use the passed-in value. E.g. the provider may opt to
+   conduct sanitization on the passed-in name for security concerns. If the API user ends up passing in `null` or 
+   using the no-arg `instance()` method to get a logger, then the name of the logger instance is undefined; the 
+   provider may opt to supply a default, e.g. the name of the caller class. 
+4. Log level: If the API user does not set the log level by using the fluent-style `atLevel(Level level)` method
+   or one of the no-arg shorthand equivalents, then the actual logging behavior is undefined; the SPI provider
+   may opt to supply a default logging level.
 
 ### The client API
 
@@ -82,12 +82,13 @@ public interface Logger {
 
 #### Sample usage
 
-Note: Once coding is done as in the sample, nothing will be logging out until you include an ELF4J logging
-provider binding JAR in the classpath. The [tinylog provider](https://github.com/elf4j/elf4j-tinylog)
-binding JAR can be used as a working reference implementation, together with the
-[tinylog](https://tinylog.org/v2/) JAR itself. The application using this ELF4J API can opt to use
-any such logging provider (e.g. the [LOG4J provider](https://github.com/elf4j/elf4j-log4j)) of the ELF4J
-SPI at deployment time, without any code change.
+Note that ELF4J is a facade, rather than implementation. As such, nothing will be 
+logging out until you include an ELF4J logging provider JAR in the classpath. 
+The [tinylog provider](https://github.com/elf4j/elf4j-tinylog) binding JAR can be used as a working
+reference implementation, together with the [tinylog](https://tinylog.org/v2/) JAR itself. 
+The ELF4J API client can select or change to use any such logging provider 
+(e.g. the [LOG4J provider](https://github.com/elf4j/elf4j-log4j)) of the ELF4J SPI, at application
+deployment time, without any code change.
 
 ```
 class readmeSamples {
@@ -159,5 +160,5 @@ Available logging service providers:
 
 More providers to come:
 
-- JDK1.4 util logging provider
+- JDK util logging (JUL) provider
 - ...

@@ -21,18 +21,16 @@ Java 8 or better
 
 ## Conventions, defaults, and implementation notes:
 
-1. Placeholder token: The empty curly braces token `{}` is chosen to be the placeholder for the log message arguments.
+1. Placeholder token: The empty curly braces token `{}` is chosen to be the placeholder for message arguments.
    This is by convention, and does not syntactically appear in the API or SPI. Both the API user and the SPI provider
-   must honor such convention. If the native logging framework uses different placeholder token(s), the SPI provider
-   must take care of the token conversion.
+   must honor such convention.
 2. Immutability: An ELF4J `Logger` instance must be assumed immutable, thus thread-safe, by both the API client and the
    SPI provider. This applies, even and especially, to those instances returned by the fluent-style `Logger.atZzz(...)`
    methods.
-3. Logger name: To get an ELF4J `Logger` instance, the API user may supply an associated name or class. It is up to the
-   SPI provider how to use the passed-in value. E.g. the provider may opt to conduct sanitization on the passed-in name
-   for security concerns. If the API user ends up passing in `null` or using the no-arg `instance()` method to get a
-   logger, then the name of the logger instance is undefined; the provider may opt to supply a default, e.g. the name of
-   the caller class.
+3. Logger name: To get an ELF4J `Logger` instance, the API user may supply an associated name or class when calling the 
+   `Logger.instance(...)` method. However, it is up to the SPI provider how to use the passed-in value. If the API user
+   ends up passing in `null` or using the no-arg `Logger.instance()` method, then the name of the logger instance is
+   undefined; the provider may opt to supply a default, e.g. the name of the caller class.
 4. Log level: If the API user does not set the log level by using the fluent-style `atLevel(Level level)` method or one
    of the no-arg shorthand equivalents, then the actual logging behavior is undefined; the SPI provider may opt to
    supply a default logging level.
@@ -43,8 +41,7 @@ Java 8 or better
 
 #### The Logger
 
-Notice the fluent style of the API. The `.log(...)` methods are terminal operations; the methods with return
-type `Logger` are chain-able intermediate/configuration operations.
+Notice the fluent style of the API. Any `Logger` instance returned by the API is immuntable/thread-safe.
 
 ```
 public interface Logger {

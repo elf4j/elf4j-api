@@ -66,9 +66,9 @@ public interface Logger {
 
     void log(Throwable t);
 
-    void log(Throwable t, String message);
+    void log(Throwable t, Object message);
 
-    void log(Throwable t, Supplier<String> message);
+    void log(Throwable t, Supplier<?> message);
 
     void log(Throwable t, String message, Object... args);
 

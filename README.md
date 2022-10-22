@@ -27,17 +27,17 @@ Conventions, defaults, and implementation notes:
    This is by convention, and does not syntactically appear in the API or SPI. Both the API user and the SPI provider
    must honor such convention. If the native logging framework uses different placeholder token(s), the SPI provider
    must take care of the token conversion.
-2. Immutability: An ELF4J `Logger` instance must be assumed immutable, thus thread-safe, by both the API client 
-   and the SPI provider. This applies, even and especially, to those instances returned by the fluent-style
-   `Logger.atZzz(...)` methods.
-3. Logger name: To get an ELF4J `Logger` instance, the API user may supply an associated name or class. It is up to
-   the SPI provider how to use the passed-in value. E.g. the provider may opt to
-   conduct sanitization on the passed-in name for security concerns. If the API user ends up passing in `null` or 
-   using the no-arg `instance()` method to get a logger, then the name of the logger instance is undefined; the 
-   provider may opt to supply a default, e.g. the name of the caller class. 
-4. Log level: If the API user does not set the log level by using the fluent-style `atLevel(Level level)` method
-   or one of the no-arg shorthand equivalents, then the actual logging behavior is undefined; the SPI provider
-   may opt to supply a default logging level.
+2. Immutability: An ELF4J `Logger` instance must be assumed immutable, thus thread-safe, by both the API client and the
+   SPI provider. This applies, even and especially, to those instances returned by the fluent-style `Logger.atZzz(...)`
+   methods.
+3. Logger name: To get an ELF4J `Logger` instance, the API user may supply an associated name or class. It is up to the
+   SPI provider how to use the passed-in value. E.g. the provider may opt to conduct sanitization on the passed-in name
+   for security concerns. If the API user ends up passing in `null` or using the no-arg `instance()` method to get a
+   logger, then the name of the logger instance is undefined; the provider may opt to supply a default, e.g. the name of
+   the caller class.
+4. Log level: If the API user does not set the log level by using the fluent-style `atLevel(Level level)` method or one
+   of the no-arg shorthand equivalents, then the actual logging behavior is undefined; the SPI provider may opt to
+   supply a default logging level.
 
 ### The client API
 
@@ -82,13 +82,12 @@ public interface Logger {
 
 #### Sample usage
 
-Note that ELF4J is a facade, rather than implementation. As such, nothing will be 
-logging out until you include an ELF4J logging provider JAR in the classpath. 
-The [tinylog provider](https://github.com/elf4j/elf4j-tinylog) binding JAR can be used as a working
-reference implementation, together with the [tinylog](https://tinylog.org/v2/) JAR itself. 
-The ELF4J API client can select or change to use any such logging provider 
-(e.g. the [LOG4J provider](https://github.com/elf4j/elf4j-log4j)) of the ELF4J SPI, at application
-deployment time, without any code change.
+Note that ELF4J is a facade, rather than implementation. As such, nothing will be logging out until you include an ELF4J
+logging provider JAR in the classpath. The [tinylog provider](https://github.com/elf4j/elf4j-tinylog) binding JAR can be
+used as a working reference implementation, together with the [tinylog](https://tinylog.org/v2/) JAR itself. The ELF4J
+API client can select or change to use any such logging provider (e.g.
+the [LOG4J provider](https://github.com/elf4j/elf4j-log4j)) of the ELF4J SPI, at application deployment time, without
+any code change.
 
 ```
 class readmeSamples {

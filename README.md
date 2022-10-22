@@ -19,9 +19,7 @@ Java 8 or better
 
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.elf4j/elf4j-api.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.elf4j%22%20AND%20a:%22elf4j-api%22)
 
-## Use it...
-
-Conventions, defaults, and implementation notes:
+## Conventions, defaults, and implementation notes:
 
 1. Placeholder token: The empty curly braces token `{}` is chosen to be the placeholder for the log message arguments.
    This is by convention, and does not syntactically appear in the API or SPI. Both the API user and the SPI provider
@@ -39,12 +37,14 @@ Conventions, defaults, and implementation notes:
    of the no-arg shorthand equivalents, then the actual logging behavior is undefined; the SPI provider may opt to
    supply a default logging level.
 
+## Use it...
+
 ### The client API
 
 #### The Logger
 
-Notice the fluent style of the API. The `.log(...)` methods are Terminal operations; the methods with return
-type `Logger` are chain-able Intermediate/configuration operations.
+Notice the fluent style of the API. The `.log(...)` methods are terminal operations; the methods with return
+type `Logger` are chain-able intermediate/configuration operations.
 
 ```
 public interface Logger {
@@ -83,11 +83,10 @@ public interface Logger {
 #### Sample usage
 
 Note that ELF4J is a facade, rather than implementation. As such, nothing will be logging out until you include an ELF4J
-logging provider JAR in the classpath. The [tinylog provider](https://github.com/elf4j/elf4j-tinylog) binding JAR can be
-used as a working reference implementation, together with the [tinylog](https://tinylog.org/v2/) JAR itself. The ELF4J
-API client can select or change to use any such logging provider (e.g.
-the [LOG4J provider](https://github.com/elf4j/elf4j-log4j)) of the ELF4J SPI, at application deployment time, without
-any code change.
+logging provider JAR in the classpath, e.g. the [tinylog provider](https://github.com/elf4j/elf4j-tinylog) binding JAR. 
+An ELF4J API client like this can select or change to use any such logging provider (e.g. 
+the [LOG4J provider](https://github.com/elf4j/elf4j-log4j)) of the ELF4J SPI, at application deployment time, without 
+code change.
 
 ```
 class readmeSamples {

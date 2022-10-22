@@ -47,16 +47,13 @@ Notice the fluent style of the API. Any `Logger` instance returned by the API is
 public interface Logger {
    static Logger instance() {
       return LoggerFactoryProvider.INSTANCE.loggerFactory().logger();
-   }
-   
+   }   
    static Logger instance(String name) {
       return LoggerFactoryProvider.INSTANCE.loggerFactory().logger(name);
-   }
-   
+   }   
    static Logger instance(Class<?> clazz) {
       return LoggerFactoryProvider.INSTANCE.loggerFactory().logger(clazz);
-   }
-   
+   }   
    String getName();
    Level getLevel();
    Logger atLevel(Level level);

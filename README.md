@@ -77,8 +77,8 @@ public interface Logger {
    void log(String message, Object... args);
    void log(String message, Supplier<?>... args);
    void log(Throwable t);
-   void log(Throwable t, String message);
-   void log(Throwable t, Supplier<String> message);
+   void log(Throwable t, Object message);
+   void log(Throwable t, Supplier<?> message);
    void log(Throwable t, String message, Object... args);
    void log(Throwable t, String message, Supplier<?>... args);
 }

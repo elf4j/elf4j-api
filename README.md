@@ -51,7 +51,7 @@ logging level.
 
 #### The Logger
 
-Notice the fluent style of the API. Any `Logger` instance returned by the API is immuntable/thread-safe.
+Notice the fluent style of the API. Any `Logger` instance returned by the API should be immuntable/thread-safe.
 
 ```
 public interface Logger {

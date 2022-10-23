@@ -90,7 +90,7 @@ public interface Logger {
 
 Note that ELF4J is a facade, rather than implementation. As such, nothing will be logging out until you include an ELF4J
 logging provider JAR in the classpath, e.g. the [tinylog provider](https://github.com/elf4j/elf4j-tinylog) binding JAR.
-An ELF4J API client like this can select or change to use any such logging provider (e.g.
+An ELF4J API client as in this sample can select or change to use any such logging provider (e.g.
 the [LOG4J provider](https://github.com/elf4j/elf4j-log4j)) of the ELF4J SPI, at application deployment time, without
 code change.
 

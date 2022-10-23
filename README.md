@@ -30,18 +30,19 @@ must honor such convention.
 ### Immutability
 
 An ELF4J `Logger` instance must be assumed immutable, thus thread-safe, by both the API client and the SPI provider.
-This applies, even and especially, to those instances returned by the fluent-style `Logger.atZzz(...)` methods.
+This applies, even and especially, to those instances returned by the fluent-style Logger#atLevel method or its
+shorthand equivalents.
 
 ### Logger name
 
-To get an ELF4J `Logger` instance, the API user may supply an associated name or class when calling
-the `Logger.instance(...)` method. However, it is up to the SPI provider how to use the passed-in name - if at all.
-E.g. if the API user ends up passing in `null` or using the no-arg `Logger.instance()` method, then the name of the
-logger instance is undefined; the provider may opt to supply a default, e.g. the name of the caller class.
+To get an ELF4J `Logger` instance, the API user may supply an associated name or class when calling the Logger#instance
+method. However, it is up to the SPI provider how to use the passed-in name - if at all. E.g. if the API user ends up
+passing in null or using the no-arg Logger#instance method, then the name of the logger instance is undefined; the
+provider may opt to supply a default, e.g. the name of the caller class.
 
 ### Log level
 
-If the API user does not set the log level by using the fluent-style `atLevel(Level level)` method or one of the no-arg
+If the API user does not set the log level by using the fluent-style Logger#atLevel method or one of the no-arg
 shorthand equivalents, then the actual logging behavior is undefined; the SPI provider may opt to supply a default
 logging level.
 
@@ -51,7 +52,7 @@ logging level.
 
 #### The Logger
 
-Notice the fluent style of the API, where the `.log(...)` methods are terminal operations, and the methods returning
+Notice the fluent style of the API, where the Logger#log methods are terminal operations, and the methods returning
 a `Logger` instance are intermediate/configuration operations. Any `Logger` instance returned by the API should be
 immutable, thus thread-safe.
 
@@ -157,7 +158,7 @@ public interface LoggerFactory {
 
 Available logging service providers:
 
-- [tinylog provider](https://github.com/elf4j/elf4j-tinylog)
+- [tinylog provider](https://github.com/elf4j/elf4j-tinylog) as a reference implementation
 - [LOG4J provider](https://github.com/elf4j/elf4j-log4j)
 - [LOGBACK provider](https://github.com/elf4j/elf4j-logback)
 - ...

@@ -44,11 +44,6 @@ public enum NoopLogger implements Logger {
     }
 
     @Override
-    public Logger atLevel(Level level) {
-        return this;
-    }
-
-    @Override
     public Logger atTrace() {
         return this;
     }

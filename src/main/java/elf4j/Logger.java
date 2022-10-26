@@ -44,8 +44,6 @@ public interface Logger {
 
     Level getLevel();
 
-    Logger atLevel(Level level);
-
     Logger atTrace();
 
     Logger atDebug();

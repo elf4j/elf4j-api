@@ -8,7 +8,7 @@ The API and SPI of Easy Logging Facade for Java (ELF4J) - a no-fluff Java loggin
    change the actual logging implementation at the application deployment time without code change.
 2. As a logging framework provider, I want to have
    a [Service Provider Interfaces (SPI)](https://docs.oracle.com/javase/tutorial/sound/SPI-intro.html) definition
-   I can implement, so that my independent logging framework can be discovered and used by any ELF4J API 
+   I can implement, so that my independent logging framework can be discovered and used by any ELF4J API
    application at the deployment time.
 
 ## Prerequisite
@@ -30,8 +30,7 @@ must honor such convention.
 ### Immutability
 
 An ELF4J `Logger` instance must be assumed immutable, thus thread-safe, by both the API client and the SPI provider.
-This applies, even and especially, to those instances returned by the fluent-style Logger#atLevel method or its
-shorthand equivalents.
+This applies, even and especially, to those instances returned by the fluent-style Logger#at[Level] methods.
 
 ### Logger name
 
@@ -42,9 +41,8 @@ provider may opt to supply a default, e.g. the name of the caller class.
 
 ### Log level
 
-If the API user does not set the log level by using the fluent-style Logger#atLevel method or one of the no-arg
-shorthand equivalents, then the actual logging behavior is undefined; the SPI provider may opt to supply a default
-logging level.
+If the API user does not set the log level by using the fluent-style Logger#at[Level] methods, then the actual logging
+behavior is undefined; the SPI provider may opt to supply a default logging level.
 
 ## Use it...
 
@@ -69,7 +67,6 @@ public interface Logger {
    }   
    String getName();
    Level getLevel();
-   Logger atLevel(Level level);
    Logger atTrace();
    Logger atDebug();
    Logger atInfo();
@@ -102,7 +99,6 @@ class readmeSamples {
    @Test
    void messageAndArgs() {
       logger.atInfo().log("info message");
-      logger.atLevel(Level.INFO).log("{} is a shorthand of {}", "atInfo()", "atLevel(Level.INFO)");
       logger.atWarn()
               .log("warn message with supplier arg1 {}, arg2 {}, arg3 {}",
                       () -> "a11111",

@@ -154,7 +154,7 @@ public interface LoggerFactory {
 
 Available logging service providers:
 
-- [tinylog provider](https://github.com/elf4j/elf4j-tinylog) as a reference implementation
+- [tinylog provider](https://github.com/elf4j/elf4j-tinylog)
 - [LOG4J provider](https://github.com/elf4j/elf4j-log4j)
 - [LOGBACK provider](https://github.com/elf4j/elf4j-logback)
 - [JDK Logging (JUL) provider](https://github.com/elf4j/elf4j-jdk)

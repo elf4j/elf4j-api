@@ -23,52 +23,29 @@
  *
  */
 
-package elf4j;
+package elf4j.util;
 
-import java.util.function.Supplier;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 
-public interface Logger {
-    static Logger instance() {
-        return LoggerFactoryProvider.INSTANCE.loggerFactory().logger();
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
+class NoopLoggerTest {
+
+    @Nested
+    class isEnabled {
+        @Test
+        void noLevelEnabled() {
+            assertFalse(NoopLogger.INSTANCE.isEnabled());
+        }
     }
 
-    static Logger instance(String name) {
-        return LoggerFactoryProvider.INSTANCE.loggerFactory().logger(name);
+    @Nested
+    class getName {
+        @Test
+        void instanceToString() {
+            assertEquals(NoopLogger.INSTANCE.getClass().getName(), NoopLogger.INSTANCE.getName());
+        }
     }
-
-    static Logger instance(Class<?> clazz) {
-        return LoggerFactoryProvider.INSTANCE.loggerFactory().logger(clazz);
-    }
-
-    Logger atTrace();
-
-    Logger atDebug();
-
-    Logger atInfo();
-
-    Logger atWarn();
-
-    Logger atError();
-
-    String getName();
-
-    boolean isEnabled();
-
-    void log(Object message);
-
-    void log(Supplier<?> message);
-
-    void log(String message, Object... args);
-
-    void log(String message, Supplier<?>... args);
-
-    void log(Throwable t);
-
-    void log(Throwable t, Object message);
-
-    void log(Throwable t, Supplier<?> message);
-
-    void log(Throwable t, String message, Object... args);
-
-    void log(Throwable t, String message, Supplier<?>... args);
 }

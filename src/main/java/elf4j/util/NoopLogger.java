@@ -25,23 +25,12 @@
 
 package elf4j.util;
 
-import elf4j.Level;
 import elf4j.Logger;
 
 import java.util.function.Supplier;
 
 public enum NoopLogger implements Logger {
     INSTANCE;
-
-    @Override
-    public String getName() {
-        return NoopLogger.INSTANCE.toString();
-    }
-
-    @Override
-    public Level getLevel() {
-        return Level.OFF;
-    }
 
     @Override
     public Logger atTrace() {
@@ -66,6 +55,16 @@ public enum NoopLogger implements Logger {
     @Override
     public Logger atError() {
         return this;
+    }
+
+    @Override
+    public String getName() {
+        return NoopLogger.INSTANCE.getClass().getName();
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return false;
     }
 
     @Override

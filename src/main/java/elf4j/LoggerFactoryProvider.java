@@ -30,17 +30,27 @@ import elf4j.util.NoopLoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.ServiceLoader;
 import java.util.logging.Level;
 
 enum LoggerFactoryProvider {
     INSTANCE;
+    private static final String ELF4J_LOGGER_FACTORY_FQCN = "elf4j.logger.factory.fqcn";
     private final LoggerFactory loggerFactory;
-    private final java.util.logging.Logger utilLogger =
+    private final java.util.logging.Logger julLogger =
             java.util.logging.Logger.getLogger(LoggerFactoryProvider.class.getName());
 
     LoggerFactoryProvider() {
         this.loggerFactory = load();
+    }
+
+    private static Optional<String> getSystemConfiguredLoggerFactoryClassName() {
+        String intendedLoggerFactoryClassName = System.getProperty(ELF4J_LOGGER_FACTORY_FQCN);
+        if (intendedLoggerFactoryClassName == null || intendedLoggerFactoryClassName.trim().isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(intendedLoggerFactoryClassName.trim());
     }
 
     LoggerFactory loggerFactory() {
@@ -49,22 +59,36 @@ enum LoggerFactoryProvider {
 
     private LoggerFactory load() {
         ServiceLoader<LoggerFactory> serviceLoader = ServiceLoader.load(LoggerFactory.class);
-        List<LoggerFactory> loggerFactories = new ArrayList<>();
+        List<LoggerFactory> loadedFactories = new ArrayList<>();
         for (LoggerFactory loaded : serviceLoader) {
-            loggerFactories.add(loaded);
+            loadedFactories.add(loaded);
         }
-        if (loggerFactories.isEmpty()) {
-            utilLogger.warning("no provisioned logger factory loaded!!! falling back to NO-OP logging...");
+        Optional<String> systemConfiguredLoggerFactoryClassName = getSystemConfiguredLoggerFactoryClassName();
+        if (systemConfiguredLoggerFactoryClassName.isPresent()) {
+            String intendedLoggerFactory = systemConfiguredLoggerFactoryClassName.get();
+            for (LoggerFactory loaded : loadedFactories) {
+                if (intendedLoggerFactory.equals(loaded.getClass().getName())) {
+                    julLogger.log(Level.INFO, "intended ELF4J logger factory discovered: {0}", intendedLoggerFactory);
+                    return loaded;
+                }
+            }
+            throw new IllegalArgumentException(
+                    "intended ELF4J logger factory [" + intendedLoggerFactory + "] not found in discovered factories: "
+                            + loadedFactories + ", by current class loader: " + Thread.currentThread()
+                            .getContextClassLoader());
+        }
+        if (loadedFactories.isEmpty()) {
+            julLogger.warning("no ELF4J logger factory discovered!!! falling back to NO-OP logging...");
             return NoopLoggerFactory.INSTANCE;
         }
-        if (loggerFactories.size() == 1) {
-            LoggerFactory provisionedLoggerFactory = loggerFactories.get(0);
-            utilLogger.log(Level.INFO, "provisioned ELF4J logger factory [{0}]", provisionedLoggerFactory);
+        if (loadedFactories.size() == 1) {
+            LoggerFactory provisionedLoggerFactory = loadedFactories.get(0);
+            julLogger.log(Level.INFO, "provisioned ELF4J logger factory discovered: {0}", provisionedLoggerFactory);
             return provisionedLoggerFactory;
         }
-        throw new IllegalStateException(
-                "expected one single provided logger factory but loaded " + loggerFactories.size() + ": "
-                        + loggerFactories + ", by current class loader: " + Thread.currentThread()
+        throw new IllegalArgumentException(
+                "expected one single provisioned logger factory but discovered " + loadedFactories.size() + ": "
+                        + loadedFactories + ", by current class loader: " + Thread.currentThread()
                         .getContextClassLoader());
     }
 }

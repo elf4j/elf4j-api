@@ -170,7 +170,7 @@ Available logging service providers:
 - [tinylog provider](https://github.com/elf4j/elf4j-tinylog)
 - [LOG4J provider](https://github.com/elf4j/elf4j-log4j)
 - [LOGBACK provider](https://github.com/elf4j/elf4j-logback)
-- [JDK Logging (JUL) provider](https://github.com/elf4j/elf4j-jdk)
+- [java.util.logging (JUL) provider](https://github.com/elf4j/elf4j-jdk)
 - ...
 
 More providers to come:

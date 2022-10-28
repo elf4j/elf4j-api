@@ -116,7 +116,7 @@ code change.
                         "level",
                         "enabled");
             }
-            debug.log(() -> "alternative to the level guard, using a supplier function should achieves the same goal, pending quality of the logging provider");
+            debug.log(() -> "alternative to the level guard, using a supplier function should achieve the same goal, pending quality of the logging provider");
         }
 
         @Test

@@ -17,7 +17,7 @@ Java 8 or better
 
 ## Get it...
 
-From Maven Central
+from Maven Central
 
 - [![Maven Central](https://img.shields.io/maven-central/v/io.github.elf4j/elf4j-api.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.elf4j%22%20AND%20a:%22elf4j-api%22)
 
@@ -58,31 +58,31 @@ immutable, thus thread-safe.
 
 ```
 public interface Logger {
-   static Logger instance() {
-      return LoggerFactoryProvider.INSTANCE.loggerFactory().logger();
-   }   
-   static Logger instance(String name) {
-      return LoggerFactoryProvider.INSTANCE.loggerFactory().logger(name);
-   }   
-   static Logger instance(Class<?> clazz) {
-      return LoggerFactoryProvider.INSTANCE.loggerFactory().logger(clazz);
-   }   
-   Logger atTrace();
-   Logger atDebug();
-   Logger atInfo();
-   Logger atWarn();
-   Logger atError();
-   String getName();
-   boolean isEnabled();
-   void log(Object message);
-   void log(Supplier<?> message);
-   void log(String message, Object... args);
-   void log(String message, Supplier<?>... args);
-   void log(Throwable t);
-   void log(Throwable t, Object message);
-   void log(Throwable t, Supplier<?> message);
-   void log(Throwable t, String message, Object... args);
-   void log(Throwable t, String message, Supplier<?>... args);
+    static Logger instance() {
+        return LoggerFactoryProvider.INSTANCE.loggerFactory().logger();
+    }
+    static Logger instance(String name) {
+        return LoggerFactoryProvider.INSTANCE.loggerFactory().logger(name);
+    }
+    static Logger instance(Class<?> clazz) {
+        return LoggerFactoryProvider.INSTANCE.loggerFactory().logger(clazz);
+    }
+    Logger atTrace();
+    Logger atDebug();
+    Logger atInfo();
+    Logger atWarn();
+    Logger atError();
+    String getName();
+    boolean isEnabled();
+    void log(Object message);
+    void log(Supplier<?> message);
+    void log(String message, Object... args);
+    void log(String message, Supplier<?>... args);
+    void log(Throwable t);
+    void log(Throwable t, Object message);
+    void log(Throwable t, Supplier<?> message);
+    void log(Throwable t, String message, Object... args);
+    void log(Throwable t, String message, Supplier<?>... args);
 }
 ```
 

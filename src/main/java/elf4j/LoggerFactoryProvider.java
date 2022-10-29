@@ -68,17 +68,17 @@ enum LoggerFactoryProvider {
             String intendedLoggerFactory = systemConfiguredLoggerFactoryClassName.get();
             for (LoggerFactory loaded : loadedFactories) {
                 if (intendedLoggerFactory.equals(loaded.getClass().getName())) {
-                    julLogger.log(Level.INFO, "intended ELF4J logger factory discovered: {0}", intendedLoggerFactory);
+                    julLogger.log(Level.INFO, "intended ELF4J logger factory discovered: {0}", loaded);
                     return loaded;
                 }
             }
-            throw new IllegalArgumentException(
-                    "intended ELF4J logger factory [" + intendedLoggerFactory + "] not found in discovered factories: "
-                            + loadedFactories + ", by current class loader: " + Thread.currentThread()
-                            .getContextClassLoader());
+            julLogger.log(Level.WARNING,
+                    "intended ELF4J logger factory [{0}] not found in discovered factories: {1}, falling back to NO-OP logging...",
+                    new Object[] { intendedLoggerFactory, loadedFactories });
+            return NoopLoggerFactory.INSTANCE;
         }
         if (loadedFactories.isEmpty()) {
-            julLogger.warning("no ELF4J logger factory discovered!!! falling back to NO-OP logging...");
+            julLogger.warning("no ELF4J logger factory discovered, falling back to NO-OP logging...");
             return NoopLoggerFactory.INSTANCE;
         }
         if (loadedFactories.size() == 1) {
@@ -86,9 +86,9 @@ enum LoggerFactoryProvider {
             julLogger.log(Level.INFO, "provisioned ELF4J logger factory discovered: {0}", provisionedLoggerFactory);
             return provisionedLoggerFactory;
         }
-        throw new IllegalArgumentException(
-                "expected one single provisioned logger factory but discovered " + loadedFactories.size() + ": "
-                        + loadedFactories + ", by current class loader: " + Thread.currentThread()
-                        .getContextClassLoader());
+        julLogger.log(Level.SEVERE,
+                "configuration error: expected one single provisioned logger factory but discovered {0}: {1}, falling back to NO-OP logging...",
+                new Object[] { loadedFactories.size(), loadedFactories });
+        return NoopLoggerFactory.INSTANCE;
     }
 }

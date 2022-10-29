@@ -89,9 +89,9 @@ public interface Logger {
 Note that ELF4J is a facade, rather than implementation. As such,
 
 1. Nothing will be logging out (no-op) until you include an ELF4J logging provider JAR in the classpath. An API
-  client as in this sample can select or change to use any provider ([tinylog](https://github.com/elf4j/elf4j-tinylog)
-  , [LOG4J](https://github.com/elf4j/elf4j-log4j), ...) of the ELF4J SPI, at application deployment time, without code
-  change.
+   client as in this sample can select or change to use any provider ([tinylog](https://github.com/elf4j/elf4j-tinylog)
+   , [LOG4J](https://github.com/elf4j/elf4j-log4j), ...) of the ELF4J SPI, at application deployment time, without code
+   change.
 2. At most one in-effect logging provider is expected.
     - The default configuration setup is to ensure only one provider JAR present in the classpath, or no provider JAR
       when no-op is desired.
@@ -140,7 +140,7 @@ Note that ELF4J is a facade, rather than implementation. As such,
                             "instance");
             error.atError()
                     .log(ex,
-                            "here the {} call is {} because the {} instance is {}, and the instance's log level has always been Level.ERROR",
+                            "here the {} call is {} because the {} instance is {}, and the instance's log level has and will always be Level.ERROR",
                             "atError()",
                             "unnecessary",
                             "error logger",

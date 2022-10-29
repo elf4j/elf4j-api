@@ -88,11 +88,11 @@ public interface Logger {
 
 Note that ELF4J is a facade, rather than implementation. As such,
 
-- Nothing will be logging out (no-op) until you include an ELF4J logging provider JAR in the classpath. An ELF4J API
+1. Nothing will be logging out (no-op) until you include an ELF4J logging provider JAR in the classpath. An API
   client as in this sample can select or change to use any provider ([tinylog](https://github.com/elf4j/elf4j-tinylog)
   , [LOG4J](https://github.com/elf4j/elf4j-log4j), ...) of the ELF4J SPI, at application deployment time, without code
   change.
-- At most one working logging provider is expected.
+2. At most one in-effect logging provider is expected.
     - The default configuration setup is to ensure only one provider JAR present in the classpath, or no provider JAR
       when no-op is desired.
     - Otherwise, a system property `elf4j.logger.factory.fqcn` can be used to select the intended one among multiple

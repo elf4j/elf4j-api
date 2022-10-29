@@ -95,7 +95,7 @@ Note that ELF4J is a facade, rather than implementation. As such,
 2. At most one in-effect logging provider is expected.
     - The default configuration setup is to ensure only one provider JAR present in the classpath, or no provider JAR
       when no-op is desired.
-    - Otherwise, a system property `elf4j.logger.factory.fqcn` can be used to select the intended one among multiple
+    - Otherwise, the system property `elf4j.logger.factory.fqcn` can be used to select the intended one among multiple
       providers. An intended provider absent from the classpath results in no-op.
     - It is considered a configuration error having multiple provider JARs in the classpath without a selection. ELF4J
       falls back to no-op in all error scenarios.

@@ -44,6 +44,17 @@ provider may opt to supply a default, e.g. the name of the caller class.
 If the API user does not set the log level by using the fluent-style Logger#at[Level] methods, then the actual logging
 behavior is undefined; the SPI provider may opt to supply a default logging level.
 
+### Message arguments
+
+For any `Object` type message argument, if its run-time type is
+Supplier<?>, then by convention, the Supplier#get method will be applied first before further logging process. This makes it possible to mix and match Supplier<?>
+type of arguments with those of other types. E.g. using the convenient Logger#arg method to provide a Supplier<?>
+lambda, we can mix message arguments as in:
+
+```
+logger.log("mixing arguments {} and {}", "a regular Object arg1", arg(() -> "a Supplier<?> arg2"));
+```
+
 ## Use it...
 
 ### The client API
@@ -81,6 +92,9 @@ public interface Logger {
     void log(Throwable t, Supplier<?> message);
     void log(Throwable t, String message, Object... args);
     void log(Throwable t, String message, Supplier<?>... args);
+    static Supplier<?> arg(Supplier<?> arg) {
+        return arg;
+    }
 }
 ```
 
@@ -108,10 +122,10 @@ Note that ELF4J is a facade, rather than implementation. As such,
         void messagesArgsAndGuards() {
             logger.atInfo().log("info message");
             logger.atWarn()
-                    .log("warn message with supplier arg1 {}, arg2 {}, arg3 {}",
-                            () -> "a11111",
-                            () -> "a22222",
-                            () -> Arrays.stream(new Object[] { "a33333" }).collect(Collectors.toList()));
+                    .log("message arguments of Supplier<?> and other Object types can be mixed and matched, e.g. arg1 {}, arg2 {}, arg3 {}",
+                            "a11111",
+                            "a22222",
+                            arg(() -> Arrays.stream(new Object[] { "a33333 supplier" }).collect(Collectors.toList())));
             Logger debug = logger.atDebug();
             if (debug.isEnabled()) {
                 debug.log("a {} guarded by a {}, so {} is created {} DEBUG {} is {}",
@@ -148,10 +162,10 @@ Note that ELF4J is a facade, rather than implementation. As such,
                             "immutable");
             error.log(ex,
                     "now at Level.ERROR, together with the exception stack trace, logging some items expensive to compute: item1 {}, item2 {}, item3 {}, item4 {}, ...",
-                    () -> "i11111",
-                    () -> "i22222",
-                    () -> Arrays.asList("i33333"),
-                    () -> Arrays.stream(new Object[] { "i44444" }).collect(Collectors.toList()));
+                    "i11111",
+                    arg(() -> "i22222"),
+                    "i33333",
+                    arg(() -> Arrays.stream(new Object[] { "i44444" }).collect(Collectors.toList())));
         }
     }
 ```

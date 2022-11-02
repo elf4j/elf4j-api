@@ -71,4 +71,8 @@ public interface Logger {
     void log(Throwable t, String message, Object... args);
 
     void log(Throwable t, String message, Supplier<?>... args);
+
+    static Supplier<?> arg(Supplier<?> arg) {
+        return arg;
+    }
 }

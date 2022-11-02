@@ -47,9 +47,9 @@ behavior is undefined; the SPI provider may opt to supply a default logging leve
 ### Message arguments
 
 For any `Object` type message argument, if its run-time type is `Supplier`, then by convention, the Supplier#get method
-will be applied first before further logging process. This makes it possible to mix `Supplier` type arguments 
-with those of other types. E.g. using the convenient Logger#arg method to provide a Supplier<?> lambda, we can mix 
-message arguments as in:
+must be applied first before further logging process. This makes it possible to mix `Supplier` type arguments 
+with those of other types. E.g. using the convenience method Looger#arg for Supplier<?> lambda provision, we can mix 
+message arguments like this:
 
 ```
 logger.log("mixing arguments {} and {}", "a regular Object arg1", arg(() -> "a Supplier<?> arg2"));

@@ -121,7 +121,7 @@ Note that ELF4J is a facade, rather than implementation. As such,
                         "long and expensive-to-construct",
                         "level check",
                         "message object",
-                        "enabled by system-wide configuration of the logging provider");
+                        "enabled by system configuration of the logging provider");
             }
             debug.log(() -> "alternative to the level guard, using a Supplier<?> function like this should achieve the same goal of avoiding unnecessary message creation, pending quality of the logging provider");
         }

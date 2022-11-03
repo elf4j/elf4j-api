@@ -36,12 +36,12 @@ This applies, even and especially, to those instances returned by the fluent-sty
 
 To get an ELF4J `Logger` instance, the API user may supply an associated name or class when calling the Logger#instance
 method. However, it is up to the SPI provider how, if at all, to use the user-supplied value to determine the logger
-name. E.g. if the API user ends up passing in `null` or using the no-arg Logger#instance method, then the 
-name of the logger instance is undefined; the provider may opt to supply a default, e.g. the name of the caller class.
+name. E.g. if the API user ends up passing in `null` or using the no-arg Logger#instance method, then the name of the
+logger instance is undefined; the provider may opt to supply a default, e.g. the name of the caller class.
 
 ### Log level
 
-If the API user requests a `Logger` instance and does not set the log level by using a Logger#at[Level] call, then the 
+If the API user requests a `Logger` instance and does not set the log level by using a Logger#at[Level] call, then the
 actual logging behavior is undefined when Logger#log is called. The SPI provider may opt to supply a default level.
 
 ## Use it...
@@ -107,14 +107,14 @@ Note that ELF4J is a facade, rather than implementation. As such,
 
         @Test
         void messagesArgsAndGuards() {
-            assertEquals(Level.INFO, logger.getLevel());
-            logger.log("info level message");
-            logger.atWarn()
-                    .log("warn level message with arguments - arg1 {}, arg2 {}, arg3 {}", "a11111", "a22222", "a33333");
+            assertEquals(INFO, logger.getLevel());
+            logger.log("info level message with arguments - arg1 {}, arg2 {}, arg3 {}", "a11111", "a22222", "a33333");
+            logger.atWarn().log("switched to warn level on the fly");
+            assertEquals(INFO, logger.getLevel(), "immutable logger's level/state never changes");
 
             Logger debug = logger.atDebug();
-            assertNotSame(logger, debug);
-            assertEquals(logger.getName(), debug.getName());
+            assertNotSame(logger, debug, "different instances of different levels");
+            assertEquals(logger.getName(), debug.getName(), "same name, only level is different");
             assertEquals(Level.DEBUG, debug.getLevel());
             if (debug.isEnabled()) {
                 debug.log("a {} message guarded by a {}, so that no {} is created unless DEBUG level is {}",
@@ -128,15 +128,14 @@ Note that ELF4J is a facade, rather than implementation. As such,
 
         @Test
         void throwableAndMessageAndArgs() {
-            logger.log("let's see immutability in action...");
-
             Logger error = logger.atError();
             error.log("this is an immutable Logger instance whose level is Level.ERROR");
             Throwable ex = new Exception("ex message");
+            assertEquals(Level.ERROR, error.getLevel());
             error.log(ex, "level set omitted but we know the level is Level.ERROR");
             error.atWarn()
                     .log(ex,
-                            "the log level switched to WARN on the fly. that is, {} returns a {} and {} Logger {}",
+                            "switched to warn level on the fly. that is, {} returns a {} and {} Logger {}",
                             "atWarn()",
                             "different",
                             "immutable",

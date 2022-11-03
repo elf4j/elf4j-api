@@ -144,7 +144,7 @@ Note that ELF4J is a facade, rather than implementation. As such,
                             "instance");
             error.atError()
                     .log(ex,
-                            "here the {} call is {} because the instance is {}, and the instance's log level has and will always be Level.ERROR",
+                            "here the {} call is {} because a Logger instance is {}, and the instance's log level has and will always be Level.ERROR",
                             "atError()",
                             "unnecessary",
                             "immutable");

@@ -52,7 +52,7 @@ arguments with those of other `Object` types. E.g. using the convenience method 
 we can mix message arguments like this:
 
 ```
-logger.log("mixing arguments {} and {}", "a regular Object arg1", arg(() -> "a Supplier arg2"));
+logger.log("mixing message arguments {} and {}", "Object arg11111", arg(() -> "Supplier arg22222"));
 ```
 
 ## Use it...

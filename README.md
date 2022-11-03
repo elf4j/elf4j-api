@@ -46,10 +46,10 @@ behavior is undefined; the SPI provider may opt to supply a default logging leve
 
 ### Message arguments
 
-Anytime a `Supplier` instance comes in to the place where an `Object` message argument is expected, then the result of the
-Supplier#get method should be used instead of the `Supplier` itself. This makes it possible to mix `Supplier` type
-arguments with those of other `Object` types. E.g. using the convenience method MessageArguments#arg to provide lambdas,
-we can mix message arguments like this:
+Anytime a `Supplier` instance comes in place where an `Object` message argument is expected, then the result of the
+Supplier#get method should be used instead of the `Supplier` instance itself. This makes it possible to mix `Supplier`
+type arguments with those of other `Object` types. E.g. using a convenience method such as
+elf4j.util.MessageArguments#arg to provide lambdas, we can mix message arguments like this:
 
 ```
 logger.log("mixing message arguments {} and {}", "Object arg11111", arg(() -> "Supplier arg22222"));

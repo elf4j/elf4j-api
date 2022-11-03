@@ -128,9 +128,9 @@ Note that ELF4J is a facade, rather than implementation. As such,
 
         @Test
         void throwableAndMessageAndArgs() {
-            Logger error = logger.atError();
-            error.log("this is an immutable Logger instance whose level is Level.ERROR");
             Throwable ex = new Exception("ex message");
+            Logger error = logger.atError();
+            error.log(ex, "this is an immutable Logger instance whose level is Level.ERROR");
             assertEquals(Level.ERROR, error.getLevel());
             error.log(ex, "level set omitted but we know the level is Level.ERROR");
             error.atWarn()

@@ -35,9 +35,9 @@ This applies, even and especially, to those instances returned by the fluent-sty
 ### Logger name
 
 To get an ELF4J `Logger` instance, the API user may supply an associated name or class when calling the Logger#instance
-method. However, it is up to the SPI provider how to use the passed-in name - if at all. E.g. if the API user ends up
-passing in null or using the no-arg Logger#instance method, then the name of the logger instance is undefined; the
-provider may opt to supply a default, e.g. the name of the caller class.
+method. However, it is up to the SPI provider how, if at all, to use the user-supplied value to determine the logger
+name. E.g. if the API user ends up passing in `null` or using the no-arg Logger#instance method, then the 
+name of the logger instance is undefined; the provider may opt to supply a default, e.g. the name of the caller class.
 
 ### Log level
 

@@ -44,17 +44,6 @@ provider may opt to supply a default, e.g. the name of the caller class.
 If the API user does not set the log level by using the fluent-style Logger#at[Level] methods, then the actual logging
 behavior is undefined; the SPI provider may opt to supply a default logging level.
 
-### Message arguments
-
-Anytime a `Supplier` instance comes in place where an `Object` message argument is expected, then the result of the
-Supplier#get method should be used instead of the `Supplier` instance itself. This makes it possible to mix `Supplier`
-type arguments with those of other `Object` types. E.g. using a convenience method such as
-elf4j.util.MessageArguments#arg to provide lambdas, we can mix message arguments like this:
-
-```
-logger.log("mixing message arguments {} and {}", "Object arg11111", arg(() -> "Supplier arg22222"));
-```
-
 ## Use it...
 
 ### The client API
@@ -118,11 +107,7 @@ Note that ELF4J is a facade, rather than implementation. As such,
 
         @Test
         void messagesArgsAndGuards() {
-            logger.atWarn()
-                    .log("message arguments of Supplier<?> and other Object types can be mixed, e.g. arg1 {}, arg2 {}, arg3 {}",
-                            "a11111",
-                            arg(() -> Arrays.stream(new Object[] { "a22222 supplier" }).collect(Collectors.toList())),
-                            "a33333");
+            logger.atWarn().log("message with arguments - arg1 {}, arg2 {}, arg3 {}", "a11111", "a22222", "a33333");
             logger.atInfo().log("info message");
             Logger debug = logger.atDebug();
             assertNotSame(logger, debug);
@@ -162,10 +147,10 @@ Note that ELF4J is a facade, rather than implementation. As such,
                             "immutable");
             error.log(ex,
                     "now at Level.ERROR, together with the exception stack trace, logging some items expensive to compute: item1 {}, item2 {}, item3 {}, item4 {}, ...",
-                    "i11111",
-                    arg(() -> "i22222"),
-                    "i33333",
-                    arg(() -> Arrays.stream(new Object[] { "i44444" }).collect(Collectors.toList())));
+                    () -> "i11111",
+                    () -> "i22222",
+                    () -> "i33333",
+                    () -> Arrays.stream(new Object[] { "i44444" }).collect(Collectors.toList()));
         }
     }
 ```

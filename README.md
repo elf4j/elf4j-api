@@ -1,4 +1,4 @@
-We# elf4j-api
+# elf4j-api
 
 The API and SPI of Easy Logging Facade for Java (ELF4J)
 

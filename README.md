@@ -1,4 +1,4 @@
-# elf4j-api
+We# elf4j-api
 
 The API and SPI of Easy Logging Facade for Java (ELF4J)
 
@@ -46,10 +46,9 @@ behavior is undefined; the SPI provider may opt to supply a default logging leve
 
 ### Message arguments
 
-For any `Object` type message argument, if its run-time type is `Supplier`, then by convention, the Supplier#get method
-will be applied first before further logging process. This makes it possible to mix and match `Supplier` type of
-arguments with those of other types. E.g. using the convenient Logger#arg method to provide a Supplier<?> lambda, we can
-mix message arguments as in:
+Anytime a `Supplier` instance comes in where any `Object` message argument is expected, then the result of the Supplier#get method should be used instead of the `Supplier` itself. This makes it possible to mix `Supplier` type arguments 
+with those of other `Object` types. E.g. using the convenience method Logger#arg to provide lambdas, we can mix 
+message arguments like this:
 
 ```
 logger.log("mixing arguments {} and {}", "a regular Object arg1", arg(() -> "a Supplier<?> arg2"));
@@ -122,7 +121,7 @@ Note that ELF4J is a facade, rather than implementation. As such,
         void messagesArgsAndGuards() {
             logger.atInfo().log("info message");
             logger.atWarn()
-                    .log("message arguments of Supplier<?> and other Object types can be mixed and matched, e.g. arg1 {}, arg2 {}, arg3 {}",
+                    .log("message arguments of Supplier<?> and other Object types can be mixed, e.g. arg1 {}, arg2 {}, arg3 {}",
                             "a11111",
                             "a22222",
                             arg(() -> Arrays.stream(new Object[] { "a33333 supplier" }).collect(Collectors.toList())));

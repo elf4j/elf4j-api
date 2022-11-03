@@ -23,54 +23,20 @@
  *
  */
 
-package elf4j;
+package elf4j.util;
 
+import java.util.Arrays;
 import java.util.function.Supplier;
 
-public interface Logger {
-    static Logger instance() {
-        return LoggerFactoryProvider.INSTANCE.loggerFactory().logger();
+public class MessageArguments {
+    private MessageArguments() {
     }
 
-    static Logger instance(String name) {
-        return LoggerFactoryProvider.INSTANCE.loggerFactory().logger(name);
+    public static Supplier<?> arg(Supplier<?> arg) {
+        return arg;
     }
 
-    static Logger instance(Class<?> clazz) {
-        return LoggerFactoryProvider.INSTANCE.loggerFactory().logger(clazz);
+    public static Object[] supply(Object... args) {
+        return Arrays.stream(args).map(arg -> arg instanceof Supplier<?> ? ((Supplier<?>) arg).get() : arg).toArray();
     }
-
-    Logger atTrace();
-
-    Logger atDebug();
-
-    Logger atInfo();
-
-    Logger atWarn();
-
-    Logger atError();
-
-    String getName();
-
-    Level getLevel();
-
-    boolean isEnabled();
-
-    void log(Object message);
-
-    void log(Supplier<?> message);
-
-    void log(String message, Object... args);
-
-    void log(String message, Supplier<?>... args);
-
-    void log(Throwable t);
-
-    void log(Throwable t, Object message);
-
-    void log(Throwable t, Supplier<?> message);
-
-    void log(Throwable t, String message, Object... args);
-
-    void log(Throwable t, String message, Supplier<?>... args);
 }

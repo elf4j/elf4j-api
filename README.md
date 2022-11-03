@@ -118,13 +118,16 @@ Note that ELF4J is a facade, rather than implementation. As such,
 
         @Test
         void messagesArgsAndGuards() {
-            logger.atInfo().log("info message");
             logger.atWarn()
                     .log("message arguments of Supplier<?> and other Object types can be mixed, e.g. arg1 {}, arg2 {}, arg3 {}",
                             "a11111",
                             arg(() -> Arrays.stream(new Object[] { "a22222 supplier" }).collect(Collectors.toList())),
                             "a33333");
+            logger.atInfo().log("info message");
             Logger debug = logger.atDebug();
+            assertNotSame(logger, debug);
+            assertEquals(logger.getName(), debug.getName());
+            assertEquals(Level.DEBUG, debug.getLevel());
             if (debug.isEnabled()) {
                 debug.log("a {} guarded by a {}, so {} is created {} DEBUG {} is {}",
                         "long message",
@@ -132,7 +135,7 @@ Note that ELF4J is a facade, rather than implementation. As such,
                         "no message object",
                         "unless",
                         "level",
-                        "enabled");
+                        "enabled by application configuration");
             }
             debug.log(() -> "alternative to the level guard, using a supplier function should achieve the same goal, pending quality of the logging provider");
         }

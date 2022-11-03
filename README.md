@@ -41,8 +41,8 @@ provider may opt to supply a default, e.g. the name of the caller class.
 
 ### Log level
 
-If the API user does not set the log level by using the fluent-style Logger#at[Level] methods, then the actual logging
-behavior is undefined; the SPI provider may opt to supply a default logging level.
+If the API user requests a `Logger` instance and does not set the log level by using a Logger#at[Level] call, then the 
+actual logging behavior is undefined when Logger#log is called. The SPI provider may opt to supply a default level.
 
 ## Use it...
 

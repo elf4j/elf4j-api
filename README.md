@@ -46,9 +46,10 @@ behavior is undefined; the SPI provider may opt to supply a default logging leve
 
 ### Message arguments
 
-Anytime a `Supplier` instance comes in where any `Object` message argument is expected, then the result of the Supplier#get method should be used instead of the `Supplier` itself. This makes it possible to mix `Supplier` type arguments 
-with those of other `Object` types. E.g. using the convenience method Logger#arg to provide lambdas, we can mix 
-message arguments like this:
+Anytime a `Supplier` instance comes in where any `Object` message argument is expected, then the result of the
+Supplier#get method should be used instead of the `Supplier` itself. This makes it possible to mix `Supplier` type
+arguments with those of other `Object` types. E.g. using the convenience method MessageArguments#arg to provide lambdas,
+we can mix message arguments like this:
 
 ```
 logger.log("mixing arguments {} and {}", "a regular Object arg1", arg(() -> "a Supplier<?> arg2"));
@@ -81,6 +82,7 @@ public interface Logger {
     Logger atWarn();
     Logger atError();
     String getName();
+    Level getLevel();
     boolean isEnabled();
     void log(Object message);
     void log(Supplier<?> message);
@@ -91,9 +93,6 @@ public interface Logger {
     void log(Throwable t, Supplier<?> message);
     void log(Throwable t, String message, Object... args);
     void log(Throwable t, String message, Supplier<?>... args);
-    static Supplier<?> arg(Supplier<?> arg) {
-        return arg;
-    }
 }
 ```
 
@@ -123,8 +122,8 @@ Note that ELF4J is a facade, rather than implementation. As such,
             logger.atWarn()
                     .log("message arguments of Supplier<?> and other Object types can be mixed, e.g. arg1 {}, arg2 {}, arg3 {}",
                             "a11111",
-                            "a22222",
-                            arg(() -> Arrays.stream(new Object[] { "a33333 supplier" }).collect(Collectors.toList())));
+                            arg(() -> Arrays.stream(new Object[] { "a22222 supplier" }).collect(Collectors.toList())),
+                            "a33333");
             Logger debug = logger.atDebug();
             if (debug.isEnabled()) {
                 debug.log("a {} guarded by a {}, so {} is created {} DEBUG {} is {}",

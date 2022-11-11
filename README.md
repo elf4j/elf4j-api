@@ -94,10 +94,10 @@ Note that ELF4J is a facade, rather than implementation. As such,
    , [LOG4J](https://github.com/elf4j/elf4j-log4j), ...) of the ELF4J SPI, at application deployment time, without code
    change.
 2. At most one in-effect logging provider is expected.
-    - The default configuration setup is to ensure only one provider JAR present in the classpath, or no provider JAR
-      when no-op is desired.
-    - Otherwise, the system property `elf4j.logger.factory.fqcn` can be used to select the intended one among multiple
-      providers. An intended provider absent from the classpath results in no-op.
+    - The default and expected configuration setup is to ensure only one provider JAR present in the classpath, or no
+      provider JAR when no-op is desired.
+    - Otherwise, if multiple provider JARs are present, the system property `elf4j.logger.factory.fqcn` can be used to
+      select the intended one. An intended provider absent from the classpath results in no-op.
     - It is considered a configuration error having multiple provider JARs in the classpath without a selection. ELF4J
       falls back to no-op in all error scenarios.
 
@@ -182,6 +182,7 @@ Available logging service providers:
 - [LOG4J provider](https://github.com/elf4j/elf4j-log4j)
 - [LOGBACK provider](https://github.com/elf4j/elf4j-logback)
 - [java.util.logging (JUL) provider](https://github.com/elf4j/elf4j-jul)
+- [SLF4J provider](https://github.com/elf4j/elf4j-slf4j)
 - ...
 
 More providers to come:

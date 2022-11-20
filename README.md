@@ -102,59 +102,59 @@ Note that ELF4J is a facade, rather than implementation. As such,
       falls back to no-op in all error scenarios.
 
 ```
-    class readmeSamples {
-        private final Logger logger = Logger.instance(readmeSamples.class).atInfo();
+class readmeSamples {
+    private final Logger logger = Logger.instance(readmeSamples.class).atInfo();
 
-        @Test
-        void messagesArgsAndGuards() {
-            assertEquals(INFO, logger.getLevel());
-            logger.log("info level message with arguments - arg1 {}, arg2 {}, arg3 {}", "a11111", "a22222", "a33333");
-            logger.atWarn().log("switched to warn level on the fly");
-            assertEquals(INFO, logger.getLevel(), "immutable logger's level/state never changes");
+    @Test
+    void messagesArgsAndGuards() {
+        assertEquals(INFO, logger.getLevel());
+        logger.log("info level message with arguments - arg1 {}, arg2 {}, arg3 {}", "a11111", "a22222", "a33333");
+        logger.atWarn().log("switched to warn level on the fly");
+        assertEquals(INFO, logger.getLevel(), "immutable logger's level/state never changes");
 
-            Logger debug = logger.atDebug();
-            assertNotSame(logger, debug, "different instances of different levels");
-            assertEquals(logger.getName(), debug.getName(), "same name, only level is different");
-            assertEquals(Level.DEBUG, debug.getLevel());
-            if (debug.isEnabled()) {
-                debug.log(
-                        "a {} message guarded by a {}, so that no {} is created unless this logger - name and level combined - is {}",
-                        "long and expensive-to-construct",
-                        "level check",
-                        "message object",
-                        "enabled by system configuration of the logging provider");
-            }
-            debug.log(() -> "alternative to the level guard, using a Supplier<?> function like this should achieve the same goal of avoiding unnecessary message creation, pending quality of the logging provider");
+        Logger debug = logger.atDebug();
+        assertNotSame(logger, debug, "different instances of different levels");
+        assertEquals(logger.getName(), debug.getName(), "same name, only level is different");
+        assertEquals(Level.DEBUG, debug.getLevel());
+        if (debug.isEnabled()) {
+            debug.log(
+                    "a {} message guarded by a {}, so that no {} is created unless this logger - name and level combined - is {}",
+                    "long and expensive-to-construct",
+                    "level check",
+                    "message object",
+                    "enabled by system configuration of the logging provider");
         }
-
-        @Test
-        void throwableAndMessageAndArgs() {
-            Throwable ex = new Exception("ex message");
-            Logger error = logger.atError();
-            error.log(ex, "this is an immutable Logger instance whose level is Level.ERROR");
-            assertEquals(Level.ERROR, error.getLevel());
-            error.log(ex, "level set omitted but we know the level is Level.ERROR");
-            error.atWarn()
-                    .log(ex,
-                            "switched to warn level on the fly. that is, {} returns a {} and {} Logger {}",
-                            "atWarn()",
-                            "different",
-                            "immutable",
-                            "instance");
-            error.atError()
-                    .log(ex,
-                            "here the {} call is {} because a Logger instance is {}, and the instance's log level has and will always be Level.ERROR",
-                            "atError()",
-                            "unnecessary",
-                            "immutable");
-            error.log(ex,
-                    "now at Level.ERROR, together with the exception stack trace, logging some items expensive to compute: item1 {}, item2 {}, item3 {}, item4 {}, ...",
-                    () -> "i11111",
-                    () -> "i22222",
-                    () -> "i33333",
-                    () -> Arrays.stream(new Object[] { "i44444" }).collect(Collectors.toList()));
-        }
+        debug.log(() -> "alternative to the level guard, using a Supplier<?> function like this should achieve the same goal of avoiding unnecessary message creation, pending quality of the logging provider");
     }
+
+    @Test
+    void throwableAndMessageAndArgs() {
+        Throwable ex = new Exception("ex message");
+        Logger error = logger.atError();
+        error.log(ex, "this is an immutable Logger instance whose level is Level.ERROR");
+        assertEquals(Level.ERROR, error.getLevel());
+        error.log(ex, "level set omitted but we know the level is Level.ERROR");
+        error.atWarn()
+                .log(ex,
+                        "switched to warn level on the fly. that is, {} returns a {} and {} Logger {}",
+                        "atWarn()",
+                        "different",
+                        "immutable",
+                        "instance");
+        error.atError()
+                .log(ex,
+                        "here the {} call is {} because a Logger instance is {}, and the instance's log level has and will always be Level.ERROR",
+                        "atError()",
+                        "unnecessary",
+                        "immutable");
+        error.log(ex,
+                "now at Level.ERROR, together with the exception stack trace, logging some items expensive to compute: item1 {}, item2 {}, item3 {}, item4 {}, ...",
+                () -> "i11111",
+                () -> "i22222",
+                () -> "i33333",
+                () -> Arrays.stream(new Object[] { "i44444" }).collect(Collectors.toList()));
+    }
+}
 ```
 
 ### The provider SPI

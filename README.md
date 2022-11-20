@@ -98,7 +98,7 @@ Note that ELF4J is a facade, rather than implementation. As such,
       provider JAR when no-op is desired.
     - Otherwise, if multiple provider JARs are present, the system property `elf4j.logger.factory.fqcn` can be used to
       select the intended one. An intended provider absent from the classpath results in no-op.
-    - It is considered a configuration error having multiple provider JARs in the classpath without a selection. ELF4J
+    - It is considered a configuration error to have multiple provider JARs in the classpath without a selection. ELF4J
       falls back to no-op in all error scenarios.
 
 ```

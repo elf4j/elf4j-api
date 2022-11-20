@@ -1,6 +1,6 @@
 # elf4j-api
 
-The API and SPI of Easy Logging Facade for Java (ELF4J)
+API and SPI of Easy Logging Facade for Java (ELF4J)
 
 ## User stories
 
@@ -29,7 +29,7 @@ must honor such convention.
 
 ### Immutability
 
-An ELF4J `Logger` instance must be assumed immutable, thus thread-safe, by both the API client and the SPI provider.
+An ELF4J `Logger` instance should be assumed immutable, thus thread-safe, by both the API client and the SPI provider.
 This applies, even and especially, to those instances returned by the fluent-style Logger#at[Level] methods.
 
 ### Logger name

@@ -54,7 +54,7 @@ Notice the fluent style of the API, where the Logger#log methods are terminal op
 a `Logger` instance are intermediate/configuration operations. Any `Logger` instance returned by the API should be
 immutable, thus thread-safe.
 
-```
+```java
 public interface Logger {
     static Logger instance() {
         return LoggerFactoryProvider.INSTANCE.loggerFactory().logger();
@@ -101,7 +101,7 @@ Note that ELF4J is a facade, rather than implementation. As such,
     - It is considered a configuration error to have multiple provider JARs in the classpath without a selection. ELF4J
       falls back to no-op in all error scenarios.
 
-```
+```java
  @Nested
  class ReadmeSample {
      private final Logger defaultLogger = Logger.instance();
@@ -173,7 +173,7 @@ Provider Interface in this simple case is one and the same. The service provider
 that the ELF4J client application can discover and load the implementation using
 the [ServiceLoader](https://docs.oracle.com/javase/8/docs/api/java/util/ServiceLoader.html).
 
-```
+```java
 public interface LoggerFactory {
     Logger logger();
     Logger logger(String name);

@@ -30,19 +30,20 @@ must honor such convention.
 ### Immutability
 
 An ELF4J `Logger` instance should be assumed immutable, thus thread-safe, by both the API client and the SPI provider.
-This applies, even and especially, to those instances returned by the fluent-style Logger#at[Level] methods.
+This applies, even and especially, to those instances returned by the fluent-style `Logger#at[Level]` methods.
 
 ### Logger name
 
-To get an ELF4J `Logger` instance, the API user may supply an associated name or class when calling the Logger#instance
-method. However, it is up to the SPI provider how, if at all, to use the user-supplied value to determine the logger
-name. E.g. if the API user ends up passing in `null` or using the no-arg Logger#instance method, then the name of the
-logger instance is undefined; the provider may opt to supply a default, e.g. the name of the caller class.
+To get an ELF4J `Logger` instance, the API user may supply an associated name or class when calling
+the `Logger#instance` method. However, it is up to the SPI provider how, if at all, to use the user-supplied value to
+determine the logger name. E.g. if the API user ends up passing in `null` or using the no-arg `Logger#instance` method,
+then the name of the logger instance is undefined; the provider may opt to supply a default, e.g. the name of the caller
+class.
 
 ### Log level
 
-If the API user requests a `Logger` instance and does not set the log level by using a Logger#at[Level] call, then the
-actual logging behavior is undefined when Logger#log is called. The SPI provider may opt to supply a default level.
+If the API user requests a `Logger` instance and does not set the log level by using a `Logger#at[Level]` call, then the
+actual logging behavior is undefined when `Logger#log` is called. The SPI provider may opt to supply a default level.
 
 ## Use it...
 
@@ -50,7 +51,7 @@ actual logging behavior is undefined when Logger#log is called. The SPI provider
 
 #### The Logger
 
-Notice the fluent style of the API, where the Logger#log methods are terminal operations, and the methods returning
+Notice the fluent style of the API, where the `Logger#log` methods are terminal operations, and the methods returning
 a `Logger` instance are intermediate/configuration operations. Any `Logger` instance returned by the API should be
 immutable, thus thread-safe.
 
@@ -102,66 +103,67 @@ Note that ELF4J is a facade, rather than implementation. As such,
       falls back to no-op in all error scenarios.
 
 ```java
- @Nested
- class ReadmeSample {
-     private final Logger defaultLogger = Logger.instance();
 
-     @Test
-     void messagesArgsAndGuards() {
-         defaultLogger.log("default logger name: {}", defaultLogger.getName());
-         defaultLogger.log("default log level: {}", defaultLogger.getLevel());
-         Logger logger = defaultLogger.atInfo();
-         logger.log("level set omitted here but we know the level is {}", logger.getLevel());
-         assertEquals(INFO, logger.getLevel());
-         logger.log("logging message with arguments - arg1 {}, arg2 {}, arg3 {}", "a11111", "a22222", "a33333");
-         logger.atWarn()
-                 .log("switched to WARN level on the fly. that is, {} is a different Logger instance from {}",
-                         logger.atWarn(),
-                         logger);
-         assertEquals(INFO, logger.getLevel(), "immutable logger's level/state never changes");
+@Nested
+class ReadmeSample {
+    private final Logger defaultLogger = Logger.instance();
 
-         Logger debug = logger.atDebug();
-         assertNotSame(logger, debug, "different instances of different levels");
-         assertEquals(logger.getName(), debug.getName(), "same name, only level is different");
-         assertEquals(Level.DEBUG, debug.getLevel());
-         if (debug.isEnabled()) {
-             debug.log(
-                     "a {} message guarded by a {}, so that no {} is created unless this logger - name and level combined - is {}",
-                     "long and expensive-to-construct",
-                     "level check",
-                     "message object",
-                     "enabled by system configuration of the logging provider");
-         }
-         debug.log(() -> "alternative to the level guard, using a Supplier<?> function like this should achieve the same goal of avoiding unnecessary message creation, pending quality of the logging provider");
-     }
- }
+    @Test
+    void messagesArgsAndGuards() {
+        defaultLogger.log("default logger name: {}", defaultLogger.getName());
+        defaultLogger.log("default log level: {}", defaultLogger.getLevel());
+        Logger logger = defaultLogger.atInfo();
+        logger.log("level set omitted here but we know the level is {}", logger.getLevel());
+        assertEquals(INFO, logger.getLevel());
+        logger.log("logging message with arguments - arg1 {}, arg2 {}, arg3 {}", "a11111", "a22222", "a33333");
+        logger.atWarn()
+                .log("switched to WARN level on the fly. that is, {} is a different Logger instance from {}",
+                        logger.atWarn(),
+                        logger);
+        assertEquals(INFO, logger.getLevel(), "immutable logger's level/state never changes");
 
- @Nested
- class ReadmeSample2 {
-     private final Logger error = Logger.instance(ReadmeSample2.class).atError();
+        Logger debug = logger.atDebug();
+        assertNotSame(logger, debug, "different instances of different levels");
+        assertEquals(logger.getName(), debug.getName(), "same name, only level is different");
+        assertEquals(Level.DEBUG, debug.getLevel());
+        if (debug.isEnabled()) {
+            debug.log(
+                    "a {} message guarded by a {}, so that no {} is created unless this logger - name and level combined - is {}",
+                    "long and expensive-to-construct",
+                    "level check",
+                    "message object",
+                    "enabled by system configuration of the logging provider");
+        }
+        debug.log(() -> "alternative to the level guard, using a Supplier<?> function like this should achieve the same goal of avoiding unnecessary message creation, pending quality of the logging provider");
+    }
+}
 
-     @Test
-     void throwableAndMessageAndArgs() {
-         Throwable ex = new Exception("ex message");
-         error.atInfo()
-                 .log("{} is an immutable Logger instance whose name is {}, and level is {}",
-                         error,
-                         error.getName(),
-                         error.getLevel());
-         assertEquals(Level.ERROR, error.getLevel());
-         error.atError()
-                 .log(ex,
-                         "here the {} call is unnecessary because a Logger instance is immutable, and the instance's log level has and will always be {}",
-                         "atError()",
-                         error.getLevel());
-         error.log(ex,
-                 "now at Level.ERROR, together with the exception stack trace, logging some items expensive to compute: item1 {}, item2 {}, item3 {}, item4 {}, ...",
-                 () -> "i11111",
-                 () -> "i22222",
-                 () -> "i33333",
-                 () -> Arrays.stream(new Object[] { "i44444" }).collect(Collectors.toList()));
-     }
- }
+@Nested
+class ReadmeSample2 {
+    private final Logger error = Logger.instance(ReadmeSample2.class).atError();
+
+    @Test
+    void throwableAndMessageAndArgs() {
+        Throwable ex = new Exception("ex message");
+        error.atInfo()
+                .log("{} is an immutable Logger instance whose name is {}, and level is {}",
+                        error,
+                        error.getName(),
+                        error.getLevel());
+        assertEquals(Level.ERROR, error.getLevel());
+        error.atError()
+                .log(ex,
+                        "here the {} call is unnecessary because a Logger instance is immutable, and the instance's log level has and will always be {}",
+                        "atError()",
+                        error.getLevel());
+        error.log(ex,
+                "now at Level.ERROR, together with the exception stack trace, logging some items expensive to compute: item1 {}, item2 {}, item3 {}, item4 {}, ...",
+                () -> "i11111",
+                () -> "i22222",
+                () -> "i33333",
+                () -> Arrays.stream(new Object[] { "i44444" }).collect(Collectors.toList()));
+    }
+}
 ```
 
 ### The provider SPI
@@ -177,7 +179,7 @@ the [ServiceLoader](https://docs.oracle.com/javase/8/docs/api/java/util/ServiceL
 public interface LoggerFactory {
     Logger logger();
     Logger logger(String name);
-    Logger logger(Class<?> clazz);    
+    Logger logger(Class<?> clazz);
 }
 ```
 

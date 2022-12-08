@@ -47,7 +47,7 @@ actual logging behavior is undefined when `Logger#log` is called. The SPI provid
 
 ## Use it...
 
-### The client API
+### Client API
 
 #### The Logger
 
@@ -82,7 +82,7 @@ public interface Logger {
     void log(Throwable t, Object message);
     void log(Throwable t, Supplier<?> message);
     void log(Throwable t, String message, Object... args);
-    void log(Throwable t, String message, Supplier<?>... args);
+    void log(Throwable t, String message, Supplier<?>... args); 
 }
 ```
 
@@ -167,7 +167,7 @@ class ReadmeSample2 {
 }
 ```
 
-### The provider SPI
+### Provider SPI
 
 #### The Service/Provider Interface
 

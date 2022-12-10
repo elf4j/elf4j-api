@@ -52,9 +52,11 @@ level.
 
 Any `Object`-type argument to the `Logger#log(...)` methods, regardless a log message or a placeholder replacement
 argument, must be treated specially if its actual type at runtime is `java.util.function.Supplier`. That is, the result
-of `Supplier#get()`, instead of the `Supplier` function itself, should be used to compute the final log message. This
-affords the API client the convenience of mixing `Supplier` functions and other `Object` types to form a log message.
-When a lambda expression is used for the `Supplier` function, the lambda needs to be explicitly cast. e.g.
+of `Supplier#get()`, instead of the `Supplier` function itself, should be used to compute the final log message.
+
+This is by convention, and does not syntactically appear in the API or SPI. It affords the API client the convenience of
+mixing `Supplier` functions and other `Object` types to form the log message. When a lambda expression is used for
+the `Supplier` function, the lambda needs to be explicitly cast. e.g.
 
 ```jshelllanguage
 logger.atInfo()

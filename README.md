@@ -158,7 +158,7 @@ class ReadmeSample {
         assertEquals(Level.DEBUG, debug.getLevel());
         if (debug.isEnabled()) {
             debug.log(
-                    "a {} message guarded by a {}, so that no {} is created unless this info - name and level combined - is {}",
+                    "a {} message guarded by a {}, so that no {} is created unless this logger instance - name and level combined - is {}",
                     "long and expensive-to-construct",
                     "level check",
                     "message object",

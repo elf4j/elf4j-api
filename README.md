@@ -49,8 +49,8 @@ actual logging behavior is undefined when `Logger#log` is called. The SPI provid
 
 ### Handling of supplied log message and arguments
 
-For any `Logger#log(...)` method argument of type `Object`, regardless it's a log message or its argument, if the actual
-type at runtime is `java.util.function.Supplier`, then the result of `Supplier#get()`, instead of the `Supplier` itself,
+For any `Logger#log(...)` method argument of type `Object`, regardless a log message or its argument, if the actual type
+at runtime is `java.util.function.Supplier`, then the result of `Supplier#get()`, instead of the `Supplier` itself,
 should be used to construct the final log message. This affords the convenience for the API client to mix `Object`
 and `Supplier` types of message/arguments, albeit lambda expressions of `Supplier` functions need to be explicitly cast,
 e.g.

@@ -125,7 +125,7 @@ Note that ELF4J is a facade, rather than implementation. As such,
    client as in this sample can select or change to use any provider ([tinylog](https://github.com/elf4j/elf4j-tinylog)
    , [LOG4J](https://github.com/elf4j/elf4j-log4j), ...) of the ELF4J SPI, at application deployment time, without code
    change.
-2. At most one in-effect logging provider is expected.
+2. At most one in-effect logging provider is expected:
 - The default and expected configuration setup is to ensure only one provider JAR present in the classpath, or no
   provider JAR when no-op is desired.
 - Otherwise, if multiple provider JARs are present, the system property `elf4j.logger.factory.fqcn` can be used to

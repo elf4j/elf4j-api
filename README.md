@@ -139,13 +139,15 @@ class ReadmeSample {
 
     @Test
     void messagesArgsAndGuards() {
-        logger.log("logger name {} is the same as param class name {}", logger.getName(), ReadmeSample.class.getName());
+        logger.log("logger name {} is usually the same as the param class name {}",
+                logger.getName(),
+                ReadmeSample.class.getName());
         assertEquals(ReadmeSample.class.getName(), logger.getName());
         logger.log("default log level is {}, which depends on the individual logging provider", logger.getLevel());
         Logger info = logger.atInfo();
         info.log("level set omitted here but we know the level is {}", INFO);
         assertEquals(INFO, info.getLevel());
-        info.log("Supplier and Object args can be mixed: Object arg1 {}, Supplier arg2 {}, Object arg3 {}",
+        info.log("Supplier and other Object args can be mixed: Object arg1 {}, Supplier arg2 {}, Object arg3 {}",
                 "a11111",
                 (Supplier) () -> "a22222",
                 "a33333");
@@ -154,7 +156,7 @@ class ReadmeSample {
                         "`info.atWarn()`",
                         "`info`");
         assertNotSame(info, info.atWarn());
-        assertEquals(INFO, info.getLevel(), "immutable info's level/state never changes");
+        assertEquals(INFO, info.getLevel(), "immutable info's level never changes");
 
         Logger debug = logger.atDebug();
         assertNotSame(logger, debug, "different instances of different levels");

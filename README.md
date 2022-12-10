@@ -57,7 +57,7 @@ message. This affords the convenience for the API client to mix `Supplier` funct
 message/arguments. In this case, lambda expressions for `Supplier` functions need to be explicitly cast, e.g.
 
 ```jshelllanguage
-logger.log("A log message with mix-typed arguments of {} and {}",
+logger.log("A log message with arguments of mixed types: {} and {}",
         "an Object type that is not a Supplier function",
         (Supplier) () -> "a Supplier function type");
 ```

@@ -27,50 +27,107 @@ package elf4j;
 
 import java.util.function.Supplier;
 
+/**
+ * All instances from this API should be immutable.
+ */
 public interface Logger {
+    /**
+     * @return Logger instance with default name and Level
+     */
     static Logger instance() {
         return LoggerFactoryProvider.INSTANCE.loggerFactory().logger();
     }
 
+    /**
+     * @param name suggested name of the Logger instance
+     * @return Logger instance with the suggested name
+     */
     static Logger instance(String name) {
         return LoggerFactoryProvider.INSTANCE.loggerFactory().logger(name);
     }
 
+    /**
+     * @param clazz Class used to suggest the Logger name
+     * @return Logger instance using the given Class as the suggested name
+     */
     static Logger instance(Class<?> clazz) {
         return LoggerFactoryProvider.INSTANCE.loggerFactory().logger(clazz);
     }
 
-    Logger atTrace();
-
-    Logger atDebug();
-
-    Logger atInfo();
-
-    Logger atWarn();
-
-    Logger atError();
-
+    /**
+     * @return name of the logger instance
+     */
     String getName();
 
+    /**
+     * @return log Level of the logger instance
+     */
     Level getLevel();
 
+    /**
+     * @return true if the Logger instance is configured to be active per its name and Level, false otherwise
+     */
     boolean isEnabled();
 
+    /**
+     * @return Logger instance with the same name, and TRACE log level
+     */
+    Logger atTrace();
+
+    /**
+     * @return Logger instance with the same name, and DEBUG log level
+     */
+    Logger atDebug();
+
+    /**
+     * @return Logger instance with the same name, and INFO log level
+     */
+    Logger atInfo();
+
+    /**
+     * @return Logger instance with the same name, and WARN log level
+     */
+    Logger atWarn();
+
+    /**
+     * @return Logger instance with the same name, and ERROR log level
+     */
+    Logger atError();
+
+    /**
+     * @param message to be logged. If the actual type is {@link java.util.function.Supplier}, the result of
+     *                {@link Supplier#get()}, instead of the {@code message} itself, should be used to construct the
+     *                final log message.
+     */
     void log(Object message);
 
-    void log(Supplier<?> message);
-
+    /**
+     * @param message to be logged
+     * @param args    the arguments to replace the placeholders in the message. If any of the argument's actual type is
+     *                {@link java.util.function.Supplier}, the result of {@link Supplier#get()}, instead of the argument
+     *                itself, should be used to construct the final log message.
+     */
     void log(String message, Object... args);
 
-    void log(String message, Supplier<?>... args);
-
+    /**
+     * @param t the Throwable to be logged
+     */
     void log(Throwable t);
 
+    /**
+     * @param t       the Throwable to be logged
+     * @param message the message to be logged. If the actual type is {@link java.util.function.Supplier}, the result of
+     *                {@link Supplier#get()}, instead of the {@code message} itself, should be used to construct the
+     *                final log message.
+     */
     void log(Throwable t, Object message);
 
-    void log(Throwable t, Supplier<?> message);
-
+    /**
+     * @param t       the Throwable to be logged
+     * @param message the message to be logged
+     * @param args    the arguments to replace the placeholders in the message. If any of argument's actual type is
+     *                {@link java.util.function.Supplier}, the result of {@link Supplier#get()}, instead of the argument
+     *                itself, should be used to construct the final log message.
+     */
     void log(Throwable t, String message, Object... args);
-
-    void log(Throwable t, String message, Supplier<?>... args);
 }

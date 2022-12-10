@@ -25,6 +25,32 @@
 
 package elf4j;
 
+/**
+ * Defines log levels
+ */
 public enum Level {
-    TRACE, DEBUG, INFO, WARN, ERROR, OFF
+    /**
+     * log level TRACE
+     */
+    TRACE,
+    /**
+     * log level DEBUG
+     */
+    DEBUG,
+    /**
+     * log level INFO
+     */
+    INFO,
+    /**
+     * log level WARN
+     */
+    WARN,
+    /**
+     * log level ERROR
+     */
+    ERROR,
+    /**
+     * log level OFF
+     */
+    OFF
 }

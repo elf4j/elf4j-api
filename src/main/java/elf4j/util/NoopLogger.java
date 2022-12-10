@@ -28,9 +28,13 @@ package elf4j.util;
 import elf4j.Level;
 import elf4j.Logger;
 
-import java.util.function.Supplier;
-
+/**
+ * No-op implementation of {@link Logger} API
+ */
 public enum NoopLogger implements Logger {
+    /**
+     * sole instance
+     */
     INSTANCE;
 
     @Override
@@ -79,17 +83,7 @@ public enum NoopLogger implements Logger {
     }
 
     @Override
-    public void log(Supplier<?> message) {
-        //noop
-    }
-
-    @Override
     public void log(String message, Object... args) {
-        //noop
-    }
-
-    @Override
-    public void log(String message, Supplier<?>... args) {
         //noop
     }
 
@@ -104,17 +98,7 @@ public enum NoopLogger implements Logger {
     }
 
     @Override
-    public void log(Throwable t, Supplier<?> message) {
-        //noop
-    }
-
-    @Override
     public void log(Throwable t, String message, Object... args) {
-        //noop
-    }
-
-    @Override
-    public void log(Throwable t, String message, Supplier<?>... args) {
         //noop
     }
 }

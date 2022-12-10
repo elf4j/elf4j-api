@@ -47,6 +47,18 @@ class.
 If the API user requests a `Logger` instance and does not set the log level by using a `Logger#at[Level]` call, then the
 actual logging behavior is undefined when `Logger#log` is called. The SPI provider may opt to supply a default level.
 
+### Handling of supplied log message and arguments
+
+For any `Logger#log(...)` method argument of type `Object`, regardless it's a log message or its argument, if the actual
+type at runtime is `java.util.function.Supplier`, then the result of `Supplier#get()`, instead of the `Supplier` itself,
+should be used to construct the final log message. This affords the convenience for the API client to mix `Object`
+and `Supplier` types of message/arguments, albeit lambda expressions of `Supplier` functions need to be explicitly cast,
+e.g.
+
+```jshelllanguage
+logger.log("A log message with mix-typed arguments of {} and {}", "Object type", (Supplier) () -> "Supplier type");
+```
+
 ## Use it...
 
 ### Client API
@@ -62,29 +74,40 @@ public interface Logger {
     static Logger instance() {
         return LoggerFactoryProvider.INSTANCE.loggerFactory().logger();
     }
+
     static Logger instance(String name) {
         return LoggerFactoryProvider.INSTANCE.loggerFactory().logger(name);
     }
+
     static Logger instance(Class<?> clazz) {
         return LoggerFactoryProvider.INSTANCE.loggerFactory().logger(clazz);
     }
-    Logger atTrace();
-    Logger atDebug();
-    Logger atInfo();
-    Logger atWarn();
-    Logger atError();
+
     String getName();
+
     Level getLevel();
+
     boolean isEnabled();
+
+    Logger atTrace();
+
+    Logger atDebug();
+
+    Logger atInfo();
+
+    Logger atWarn();
+
+    Logger atError();
+
     void log(Object message);
-    void log(Supplier<?> message);
+
     void log(String message, Object... args);
-    void log(String message, Supplier<?>... args);
+
     void log(Throwable t);
+
     void log(Throwable t, Object message);
-    void log(Throwable t, Supplier<?> message);
+
     void log(Throwable t, String message, Object... args);
-    void log(Throwable t, String message, Supplier<?>... args); 
 }
 ```
 
@@ -118,11 +141,15 @@ class ReadmeSample {
         Logger info = logger.atInfo();
         info.log("level set omitted here but we know the level is {}", INFO);
         assertEquals(INFO, info.getLevel());
-        info.log("logging message with arguments - arg1 {}, arg2 {}, arg3 {}", "a11111", "a22222", "a33333");
+        info.log("Supplier and Object args can be mixed: Object arg1 {}, Supplier arg2 {}, Object arg3 {}",
+                "a11111",
+                (Supplier) () -> "a22222",
+                "a33333");
         info.atWarn()
                 .log("switched to WARN level on the fly. that is, {} is a different Logger instance from {}",
-                        info.atWarn(),
-                        info);
+                        "`info.atWarn()`",
+                        "`info`");
+        assertNotSame(info, info.atWarn());
         assertEquals(INFO, info.getLevel(), "immutable info's level/state never changes");
 
         Logger debug = logger.atDebug();
@@ -137,7 +164,7 @@ class ReadmeSample {
                     "message object",
                     "enabled by system configuration of the logging provider");
         }
-        debug.log(() -> "alternative to the level guard, using a Supplier<?> function like this should achieve the same goal of avoiding unnecessary message creation, pending quality of the logging provider");
+        debug.log((Supplier) () -> "alternative to the level guard, using a Supplier<?> function like this should achieve the same goal of avoiding unnecessary message creation, pending quality of the logging provider");
     }
 }
 
@@ -148,6 +175,7 @@ class ReadmeSample2 {
     @Test
     void throwableAndMessageAndArgs() {
         Throwable ex = new Exception("ex message");
+        error.log(ex);
         error.atInfo()
                 .log("{} is an immutable Logger instance whose name is {}, and level is {}",
                         error,
@@ -161,10 +189,10 @@ class ReadmeSample2 {
                         error.getLevel());
         error.log(ex,
                 "now at Level.ERROR, together with the exception stack trace, logging some items expensive to compute: item1 {}, item2 {}, item3 {}, item4 {}, ...",
-                () -> "i11111",
-                () -> "i22222",
-                () -> "i33333",
-                () -> Arrays.stream(new Object[] { "i44444" }).collect(Collectors.toList()));
+                "i11111",
+                (Supplier) () -> "i22222",
+                "i33333",
+                (Supplier) () -> Arrays.stream(new Object[] { "i44444" }).collect(Collectors.toList()));
     }
 }
 ```
@@ -181,7 +209,9 @@ the [ServiceLoader](https://docs.oracle.com/javase/8/docs/api/java/util/ServiceL
 ```java
 public interface LoggerFactory {
     Logger logger();
+
     Logger logger(String name);
+
     Logger logger(Class<?> clazz);
 }
 ```

@@ -28,7 +28,13 @@ package elf4j.util;
 import elf4j.Logger;
 import elf4j.spi.LoggerFactory;
 
+/**
+ * Default implementation of {@link LoggerFactory} that produces no-op Logger instance
+ */
 public enum NoopLoggerFactory implements LoggerFactory {
+    /**
+     * sole instance of the default logger factory
+     */
     INSTANCE;
 
     @Override

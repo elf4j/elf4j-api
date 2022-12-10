@@ -65,9 +65,9 @@ logger.log("A log message with mix-typed arguments of {} and {}", "Object type",
 
 #### The Logger
 
-Notice the fluent style of the API, where the `Logger#log` methods are terminal operations, and the methods returning
-a `Logger` instance are intermediate/configuration operations. Any `Logger` instance returned by the API should be
-immutable, thus thread-safe.
+Notice the fluent style of the API, where the `Logger#log(...)` methods are terminal operations, and the methods
+returning a `Logger` instance are intermediate/configuration operations. Any `Logger` instance returned by the API
+should be immutable, thus thread-safe.
 
 ```java
 public interface Logger {

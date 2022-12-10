@@ -28,7 +28,7 @@ package elf4j;
 import java.util.function.Supplier;
 
 /**
- * All instances from this API should be immutable.
+ * All {@link Logger} instances from this API should be immutable.
  */
 public interface Logger {
     /**

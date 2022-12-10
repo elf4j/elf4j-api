@@ -188,9 +188,10 @@ class ReadmeSample2 {
         assertEquals(Level.ERROR, error.getLevel());
         error.atError()
                 .log(ex,
-                        "here the {} call is unnecessary because a Logger instance is immutable, and the instance's log level has and will always be {}",
+                        "here the {} call is unnecessary because a Logger instance is immutable, and the {} instance's log level is already and will always be {}",
                         "atError()",
-                        error.getLevel());
+                        error,
+                        ERROR);
         error.log(ex,
                 "now at Level.ERROR, together with the exception stack trace, logging some items expensive to compute: item1 {}, item2 {}, item3 {}, item4 {}, ...",
                 "i11111",

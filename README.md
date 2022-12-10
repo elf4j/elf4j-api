@@ -32,31 +32,34 @@ must honor such convention.
 ### Immutability
 
 An ELF4J `Logger` instance should be assumed immutable, thus thread-safe, by both the API client and the SPI provider.
-This applies, even and especially, to those instances returned by the fluent-style `Logger#at[Level]` methods.
+This applies, even and especially, to those instances returned by the fluent-style `Logger#at[Level]()` methods.
 
 ### Logger name
 
-To get an ELF4J `Logger` instance, the API user may supply an associated name or class when calling
-the `Logger#instance` method. However, it is up to the SPI provider how, if at all, to use the user-supplied value to
-determine the logger name. E.g. if the API user ends up passing in `null` or using the no-arg `Logger#instance` method,
-then the name of the logger instance is undefined; the provider may opt to supply a default, e.g. the name of the caller
-class.
+To get an ELF4J `Logger` instance, the API user may supply a name or class to suggest the name of the logger when
+calling the `Logger#instance(...)` method. However, it is up to the SPI provider how, if at all, to use the
+user-supplied value to determine the logger name. E.g. if the API user ends up passing in `null` or using the
+no-arg `Logger#instance()` method, then the name of the logger instance is undefined; the provider may opt to supply a
+default, e.g. the name of the caller class.
 
 ### Log level
 
-If the API user requests a `Logger` instance and does not set the log level by using a `Logger#at[Level]` call, then the
-actual logging behavior is undefined when `Logger#log` is called. The SPI provider may opt to supply a default level.
+If the API user requests a `Logger` instance and does not set the log level by using a `Logger#at[Level]()` call, then
+the actual logging behavior is undefined when `Logger#log(...)` is called. The SPI provider may opt to supply a default
+level.
 
 ### Handling of supplied log message and arguments
 
-For any `Logger#log(...)` method argument of type `Object`, regardless a log message or its argument, if the actual type
-at runtime is `java.util.function.Supplier`, then the result of `Supplier#get()`, instead of the `Supplier` itself,
-should be used to construct the final log message. This affords the convenience for the API client to mix `Object`
-and `Supplier` types of message/arguments, albeit lambda expressions of `Supplier` functions need to be explicitly cast,
-e.g.
+Any `Object`-type argument to the `Logger#log(...)` methods, regardless a log message or its argument, must have a
+special treatment if its actual type at runtime is `java.util.function.Supplier`. That is, the result
+of `Supplier#get()`, instead of the `Supplier` instance itself, should be used to construct the final log message. This
+affords the convenience for the API client to mix regular-`Object` and `Supplier` types of message/arguments, albeit
+lambda expressions for `Supplier` functions need to be explicitly cast, e.g.
 
 ```jshelllanguage
-logger.log("A log message with mix-typed arguments of {} and {}", "Object type", (Supplier) () -> "Supplier type");
+logger.log("A log message with mix-typed arguments of {} and {}",
+        "regular Object type",
+        (Supplier) () -> "Supplier function type");
 ```
 
 ## Use it...

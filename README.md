@@ -107,9 +107,9 @@ replacement argument - must be treated specially if its actual type at runtime i
 is, the result of `Supplier#get()`, instead of the `Supplier` function itself, should be used to compute the final log
 message.
 
-This special handling of `Supplier` arguments is by convention, and not syntactically enforced by the API or SPI. It
-affords the API user the flexibility of mixing `Supplier` and other `Object` types of arguments within the
-same call of `Logger#log(...)`:
+This special handling of `Supplier` arguments is by convention, and not syntactically enforced by the API or SPI. This
+allows for the API user to mix up `Supplier` and other `Object` types of arguments within the same call
+of `Logger#log(...)`:
 
 ```jshelllanguage
 logger.atInfo()
@@ -118,7 +118,7 @@ logger.atInfo()
                 (Supplier) () -> "a Supplier function type");
 ```
 
-Per lambda expression syntax requirement, the downcast of `Supplier/Supplier<?>/Supplier<String>` here is necessary
+Per the lambda expression syntax requirement, the downcast of `Supplier/Supplier<?>/Supplier<String>` here is necessary
 because this lambda is used as a parameter declared as an `Object` rather than a functional interface.
 
 ## Use it...

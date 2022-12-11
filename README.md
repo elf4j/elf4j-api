@@ -218,7 +218,7 @@ public interface LoggerFactory {
 }
 ```
 
-## Available ELF4J logging providers
+## Available ELF4J SPI logging providers
 
 - [tinylog provider](https://github.com/elf4j/elf4j-tinylog)
 - [LOG4J provider](https://github.com/elf4j/elf4j-log4j)

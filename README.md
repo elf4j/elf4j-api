@@ -108,9 +108,8 @@ is, the result of `Supplier#get()`, instead of the `Supplier` function itself, s
 message.
 
 This special handling of `Supplier` arguments is by convention, and not syntactically enforced by the API or SPI. It
-affords the API user the flexibility of mixing `Supplier` functions and other `Object` types within the
-same  `Logger#log(...)` call. Note that, when a lambda expression is used for the `Supplier` function, the API user
-needs to downcast the lambda explicitly to `Supplier/Supplier<T>`. For example:
+affords the API user the flexibility of mixing `Supplier` and other `Object` types of arguments within the
+same `Logger#log(...)` call. e.g.
 
 ```jshelllanguage
 logger.atInfo()
@@ -119,8 +118,8 @@ logger.atInfo()
                 (Supplier) () -> "a Supplier function type");
 ```
 
-where the `Supplier/Supplier<?>/Supplier<String>` downcast is necessary because, per the lambda expression syntax
-requirement, this lambda here is used as a parameter declared as an `Object` rather than a functional interface.
+Note that, per lambda expression syntax requirement, the downcast of `Supplier/Supplier<?>/Supplier<String>` here is
+necessary because this lambda is used as a parameter declared as an `Object` rather than a functional interface.
 
 ## Use it...
 

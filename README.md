@@ -54,9 +54,9 @@ Any `Object`-type argument to the `Logger#log(...)` methods, regardless a log me
 argument, must be treated specially if its actual type at runtime is `java.util.function.Supplier`. That is, the result
 of `Supplier#get()`, instead of the `Supplier` function itself, should be used to compute the final log message.
 
-This is by convention, and does not syntactically appear in the API or SPI. It affords the API client the convenience of
-mixing `Supplier` functions and other `Object` types to form the log message. When a lambda expression is used for
-the `Supplier` function, the lambda needs to be explicitly cast. e.g.
+Note that this is by convention, and not syntactically enforced by the API or SPI. It affords API clients the
+convenience of mixing `Supplier` functions and other `Object` types to form the log message. When a lambda expression is
+used for the `Supplier` function, the lambda needs to be explicitly cast. For example:
 
 ```jshelllanguage
 logger.atInfo()
@@ -126,12 +126,13 @@ Note that ELF4J is a facade, rather than implementation. As such,
    , [LOG4J](https://github.com/elf4j/elf4j-log4j), ...) of the ELF4J SPI, at application deployment time, without code
    change.
 2. At most one in-effect logging provider is expected:
+
 - The default and expected configuration setup is to ensure only one provider JAR present in the classpath, or no
   provider JAR when no-op is desired.
 - Otherwise, if multiple provider JARs are present, the system property `elf4j.logger.factory.fqcn` can be used to
   select the intended one. An intended provider absent from the classpath results in no-op.
 - It is considered a configuration error to have multiple provider JARs in the classpath without a selection. ELF4J
-    falls back to no-op in all error scenarios.
+  falls back to no-op in all error scenarios.
 
 ```java
 

@@ -20,7 +20,7 @@ Java 8 or better
 ## Get it...
 
 From [![Maven Central](https://img.shields.io/maven-central/v/io.github.elf4j/elf4j-api.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.elf4j%22%20AND%20a:%22elf4j-api%22)
-as compile-scope dependency
+as a compile-scope dependency
 
 ## The Logger API
 

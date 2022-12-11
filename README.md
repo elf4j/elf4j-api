@@ -109,7 +109,7 @@ message.
 
 This special handling of `Supplier` arguments is by convention, and not syntactically enforced by the API or SPI. This
 allows for the API user to mix up `Supplier` and other `Object` types of arguments within the same call
-of `Logger#log(...)`:
+of `Logger#log(...)`, and get sensible outcome for the final log message:
 
 ```jshelllanguage
 logger.atInfo()

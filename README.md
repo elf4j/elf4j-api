@@ -100,16 +100,17 @@ default, e.g. the name of the caller class.
 If the API user gets a `Logger` instance via `Logger#instance(...)` without specifying the log level via one of
 the `Logger#at[Level]()` methods, then the default log level is decided by the SPI provider.
 
-### Handling user-supplied log message and arguments
+### `Supplier` functional arguments
 
-Any `Object`-type argument to the `Logger#log(...)` methods - either a log message or a placeholder replacement
-argument - must be treated specially if its actual type at runtime is `java.util.function.Supplier`. That is, the result
-of `Supplier#get()`, instead of the `Supplier` function itself, should be used to compute the final log message.
+Any argument of `Object` type passed to the `Logger#log(...)` methods - either a log message or a placeholder
+replacement argument - must be treated specially if its actual type at runtime is `java.util.function.Supplier`. That
+is, the result of `Supplier#get()`, instead of the `Supplier` function itself, should be used to compute the final log
+message.
 
-Note that, similar to the case of placeholder token, this handling is by convention and not syntactically enforced by
-the API or SPI. This affords the API client the convenience and flexibility of mixing `Supplier` functions and
-other `Object` types when forming the log message. In case a lambda expression is used for the `Supplier` function, the
-lambda needs to be explicitly cast. For example:
+Similar to the case of placeholder token, this special handling of `Supplier` arguments is by convention and not
+syntactically enforced by the API or SPI. This affords the API user the convenience and flexibility of mixing `Supplier`
+functions and other `Object` types when forming the log message. In case a lambda expression is used for the `Supplier`
+function, the lambda needs to be explicitly cast. For example:
 
 ```jshelllanguage
 logger.atInfo()

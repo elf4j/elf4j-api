@@ -107,10 +107,10 @@ replacement argument - must be treated specially if its actual type at runtime i
 is, the result of `Supplier#get()`, instead of the `Supplier` function itself, should be used to compute the final log
 message.
 
-Similar to the case of placeholder token, this special handling of `Supplier` arguments is by convention and not
-syntactically enforced by the API or SPI. This affords the API user the convenience and flexibility of mixing `Supplier`
-functions and other `Object` types when forming the log message. In case a lambda expression is used for the `Supplier`
-function, the lambda needs to be explicitly cast. For example:
+This special handling of `Supplier` arguments is by convention, and not syntactically enforced by the API or SPI. It
+affords the API user the convenience and flexibility of mixing `Supplier` functions and other `Object` types when
+calling the `Logger#log(...)` methods. Note that, when a lambda is used for the `Supplier` function, the API user needs
+to downcast the lambda explicitly to `Supplier/Supplier<T>`. For example:
 
 ```jshelllanguage
 logger.atInfo()
@@ -118,6 +118,9 @@ logger.atInfo()
                 "an Object type that is not a Supplier function",
                 (Supplier) () -> "a Supplier function type");
 ```
+
+where the `Supplier/Supplier<?>/Supplier<String>` downcast is necessary, per lambda expression syntax requirement,
+because here the lambda is used as a parameter declared as `Object` rather than a functional interface.
 
 ## Use it...
 

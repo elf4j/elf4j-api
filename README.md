@@ -37,8 +37,8 @@ This applies, even and especially, to those instances returned by the fluent-sty
 ### Logger name
 
 To get an ELF4J `Logger` instance, the API user may supply a name or class to suggest the name of the logger when
-calling the `Logger#instance(...)` method. However, it is up to the SPI provider how, if at all, to use the
-user-supplied value to determine the logger name. E.g. if the API user ends up passing in `null` or using the
+calling the `Logger#instance(...)` methods. However, it is up to the SPI provider how, if at all, to use the
+user-supplied value to determine the logger name. e.g. if the API user ends up passing in `null` or using the
 no-arg `Logger#instance()` method, then the name of the logger instance is undefined; the provider may opt to supply a
 default, e.g. the name of the caller class.
 
@@ -54,9 +54,9 @@ Any `Object`-type argument to the `Logger#log(...)` methods, regardless a log me
 argument, must be treated specially if its actual type at runtime is `java.util.function.Supplier`. That is, the result
 of `Supplier#get()`, instead of the `Supplier` function itself, should be used to compute the final log message.
 
-Note that this is by convention, and not syntactically enforced by the API or SPI. It affords API clients the
-convenience of mixing `Supplier` functions and other `Object` types to form the log message. When a lambda expression is
-used for the `Supplier` function, the lambda needs to be explicitly cast. For example:
+Note that, similar to the placeholder token, this is by convention and not syntactically enforced by the API or SPI. It
+affords API clients the convenience of mixing `Supplier` functions and other `Object` types to form the log message.
+In case a lambda expression is used for the `Supplier` function, the lambda needs to be explicitly cast. For example:
 
 ```jshelllanguage
 logger.atInfo()

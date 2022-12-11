@@ -118,8 +118,8 @@ logger.atInfo()
                 (Supplier) () -> "a Supplier function type");
 ```
 
-Note that, per lambda expression syntax requirement, the downcast of `Supplier/Supplier<?>/Supplier<String>` here is
-necessary because this lambda is used as a parameter declared as an `Object` rather than a functional interface.
+Per lambda expression syntax requirement, the downcast of `Supplier/Supplier<?>/Supplier<String>` here is necessary
+because this lambda is used as a parameter declared as an `Object` rather than a functional interface.
 
 ## Use it...
 

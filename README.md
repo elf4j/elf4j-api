@@ -109,7 +109,7 @@ message.
 
 This special handling of `Supplier` arguments is by convention, and not syntactically enforced by the API or SPI. It
 affords the API user the flexibility of mixing `Supplier` and other `Object` types of arguments within the
-same `Logger#log(...)` call. e.g.
+same call of `Logger#log(...)`:
 
 ```jshelllanguage
 logger.atInfo()
@@ -130,13 +130,12 @@ Note that ELF4J is a facade, rather than implementation. As such,
    use [any logging service provider](https://github.com/elf4j/elf4j-api#available-logging-service-providers-of-the-elf4j-spi)
    of the ELF4J SPI, at application deployment time, without code change.
 2. At most one in-effect logging provider is expected:
-
-- The default and expected configuration setup is to ensure only one provider JAR present in the classpath, or no
-  provider JAR when no-op is desired.
-- Otherwise, if multiple provider JARs are present, the system property `elf4j.logger.factory.fqcn` can be used to
-  select the intended one. An intended provider absent from the classpath results in no-op.
-- It is considered a configuration error to have multiple provider JARs in the classpath without a selection. ELF4J
-  falls back to no-op in all error scenarios.
+    1. The default and expected configuration setup is to ensure only one provider JAR present in the classpath, or no
+       provider JAR when no-op is desired.
+    2. Otherwise, if multiple provider JARs are present, the system property `elf4j.logger.factory.fqcn` can be used to
+       select the intended one. An intended provider absent from the classpath results in no-op.
+    3. It is considered a configuration error to have multiple provider JARs in the classpath without a selection. ELF4J
+       falls back to no-op in all error scenarios.
 
 ```java
 

@@ -127,8 +127,8 @@ Note that ELF4J is a facade, rather than implementation. As such,
 
 1. Nothing will be logging out (no-op) until you include an ELF4J logging provider JAR in the classpath. An API
    client as in the sample below can select or change to
-   use [any logging service provider](https://github.com/elf4j/elf4j-api#available-elf4j-spi-logging-providers) of the
-   ELF4J SPI, at application deployment time, without code change.
+   use [any logging service provider](https://github.com/elf4j/elf4j-api#available-logging-service-providers-of-the-elf4j-spi)
+   of the ELF4J SPI, at application deployment time, without code change.
 2. At most one in-effect logging provider is expected:
 
 - The default and expected configuration setup is to ensure only one provider JAR present in the classpath, or no

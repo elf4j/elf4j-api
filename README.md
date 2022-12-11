@@ -89,8 +89,7 @@ default, e.g. the name of the caller class.
 ### Log level
 
 If the API user gets a `Logger` instance via `Logger#instance(...)` without specifying the log level
-via `Logger#at[Level]()`, then the actual logging behavior is undefined. The SPI provider may opt to supply a default
-level.
+via one of the `Logger#at[Level]()` methods, then the default log level is decided by the SPI provider.
 
 ### Handling user-supplied log message and arguments
 

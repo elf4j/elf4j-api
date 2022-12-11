@@ -111,8 +111,6 @@ logger.atInfo()
 
 ## Use it...
 
-### API client sample
-
 Note that ELF4J is a facade, rather than implementation. As such,
 
 1. Nothing will be logging out (no-op) until you include an ELF4J logging provider JAR in the classpath. An API
@@ -200,12 +198,12 @@ class ReadmeSample2 {
 }
 ```
 
-### SPI provider implementation
+## Provide it...
 
 In terms of the [Java SPI](https://docs.oracle.com/javase/tutorial/sound/SPI-intro.html) setup, the Service and Service
-Provider Interface in this simple case is one and the same `LoggerFactory`. The logging provider should supply complete
-and concrete implementation (including both `LoggerFactory` and `Logger`) such that the ELF4J client application can
-discover and load the implementation using
+Provider Interface in this simple case is one and the same `LoggerFactory`. A logging provider of the ELF4J SPI should
+supply complete and concrete implementation (including both `LoggerFactory` and `Logger`) such that the ELF4J client
+application can discover and load the provider implementation using
 the [ServiceLoader](https://docs.oracle.com/javase/8/docs/api/java/util/ServiceLoader.html).
 
 ```java

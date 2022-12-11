@@ -21,6 +21,50 @@ Java 8 or better
 
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.elf4j/elf4j-api.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.elf4j%22%20AND%20a:%22elf4j-api%22)
 
+## The Logger API
+
+```java
+public interface Logger {
+    static Logger instance() {
+        return LoggerFactoryProvider.INSTANCE.loggerFactory().logger();
+    }
+
+    static Logger instance(String name) {
+        return LoggerFactoryProvider.INSTANCE.loggerFactory().logger(name);
+    }
+
+    static Logger instance(Class<?> clazz) {
+        return LoggerFactoryProvider.INSTANCE.loggerFactory().logger(clazz);
+    }
+
+    String getName();
+
+    Level getLevel();
+
+    boolean isEnabled();
+
+    Logger atTrace();
+
+    Logger atDebug();
+
+    Logger atInfo();
+
+    Logger atWarn();
+
+    Logger atError();
+
+    void log(Object message);
+
+    void log(String message, Object... args);
+
+    void log(Throwable t);
+
+    void log(Throwable t, Object message);
+
+    void log(Throwable t, String message, Object... args);
+}
+```
+
 ## Conventions, defaults, and implementation notes
 
 ### Placeholder token
@@ -67,57 +111,7 @@ logger.atInfo()
 
 ## Use it...
 
-### Client API
-
-#### The Logger
-
-Notice the fluent style of the API, where the `Logger#log(...)` methods are terminal operations, and
-the `Logger#at[Level]()` methods returning a `Logger` instance are intermediate/configuration operations. Any `Logger`
-instance returned by the API should be immutable, thus thread-safe.
-
-```java
-public interface Logger {
-    static Logger instance() {
-        return LoggerFactoryProvider.INSTANCE.loggerFactory().logger();
-    }
-
-    static Logger instance(String name) {
-        return LoggerFactoryProvider.INSTANCE.loggerFactory().logger(name);
-    }
-
-    static Logger instance(Class<?> clazz) {
-        return LoggerFactoryProvider.INSTANCE.loggerFactory().logger(clazz);
-    }
-
-    String getName();
-
-    Level getLevel();
-
-    boolean isEnabled();
-
-    Logger atTrace();
-
-    Logger atDebug();
-
-    Logger atInfo();
-
-    Logger atWarn();
-
-    Logger atError();
-
-    void log(Object message);
-
-    void log(String message, Object... args);
-
-    void log(Throwable t);
-
-    void log(Throwable t, Object message);
-
-    void log(Throwable t, String message, Object... args);
-}
-```
-
-#### Sample usage
+### API client sample
 
 Note that ELF4J is a facade, rather than implementation. As such,
 
@@ -207,13 +201,12 @@ class ReadmeSample2 {
 }
 ```
 
-### Provider SPI
-
-#### The Service/Provider Interface
+### SPI provider implementation
 
 In terms of the [Java SPI](https://docs.oracle.com/javase/tutorial/sound/SPI-intro.html) setup, the Service and Service
-Provider Interface in this simple case is one and the same. The service provider should implement this interface such
-that the ELF4J client application can discover and load the implementation using
+Provider Interface in this simple case is one and the same `LoggerFactory`. The logging provider should supply complete
+and concrete implementation (including both `LoggerFactory` and `Logger`) such that the ELF4J client application can
+discover and load the implementation using
 the [ServiceLoader](https://docs.oracle.com/javase/8/docs/api/java/util/ServiceLoader.html).
 
 ```java
@@ -226,9 +219,7 @@ public interface LoggerFactory {
 }
 ```
 
-#### SPI implementations
-
-Available logging service providers:
+#### Available ELF4J logging providers:
 
 - [tinylog provider](https://github.com/elf4j/elf4j-tinylog)
 - [LOG4J provider](https://github.com/elf4j/elf4j-log4j)

@@ -88,19 +88,20 @@ default, e.g. the name of the caller class.
 
 ### Log level
 
-If the API user requests a `Logger` instance and does not set the log level by using a `Logger#at[Level]()` call, then
-the actual logging behavior is undefined when `Logger#log(...)` is called. The SPI provider may opt to supply a default
+If the API user gets a `Logger` instance via `Logger#instance(...)` without specifying the log level
+via `Logger#at[Level]()`, then the actual logging behavior is undefined. The SPI provider may opt to supply a default
 level.
 
-### Handling of supplied log message and arguments
+### Handling user-supplied log message and arguments
 
 Any `Object`-type argument to the `Logger#log(...)` methods, regardless a log message or a placeholder replacement
 argument, must be treated specially if its actual type at runtime is `java.util.function.Supplier`. That is, the result
 of `Supplier#get()`, instead of the `Supplier` function itself, should be used to compute the final log message.
 
-Note that, similar to the placeholder token, this is by convention and not syntactically enforced by the API or SPI. It
-affords API clients the convenience of mixing `Supplier` functions and other `Object` types to form the log message.
-In case a lambda expression is used for the `Supplier` function, the lambda needs to be explicitly cast. For example:
+Note that, similar to the case of placeholder token, this handling is by convention and not syntactically enforced by
+the API or SPI. This affords API clients the convenience of mixing `Supplier` functions and other `Object` types to form
+the log message. In case a lambda expression is used for the `Supplier` function, the lambda needs to be explicitly
+cast. For example:
 
 ```jshelllanguage
 logger.atInfo()

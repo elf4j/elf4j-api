@@ -93,8 +93,8 @@ the `Logger#at[Level]()` methods, then the default log level is decided by the S
 
 ### Handling user-supplied log message and arguments
 
-Any `Object`-type argument to the `Logger#log(...)` methods, regardless a log message or a placeholder replacement
-argument, must be treated specially if its actual type at runtime is `java.util.function.Supplier`. That is, the result
+Any `Object`-type argument to the `Logger#log(...)` methods - either a log message or a placeholder replacement
+argument - must be treated specially if its actual type at runtime is `java.util.function.Supplier`. That is, the result
 of `Supplier#get()`, instead of the `Supplier` function itself, should be used to compute the final log message.
 
 Note that, similar to the case of placeholder token, this handling is by convention and not syntactically enforced by

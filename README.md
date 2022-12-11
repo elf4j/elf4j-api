@@ -25,7 +25,7 @@ as a compile-scope dependency
 ```xml
 <dependency>
   <groupId>io.github.elf4j</groupId>
-  <artifactId>elf4j-tinylog</artifactId>
+  <artifactId>elf4j-api</artifactId>
 </dependency>
 ```
 

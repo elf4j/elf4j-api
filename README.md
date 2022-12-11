@@ -107,9 +107,9 @@ argument - must be treated specially if its actual type at runtime is `java.util
 of `Supplier#get()`, instead of the `Supplier` function itself, should be used to compute the final log message.
 
 Note that, similar to the case of placeholder token, this handling is by convention and not syntactically enforced by
-the API or SPI. This affords API clients the convenience of mixing `Supplier` functions and other `Object` types to form
-the log message. In case a lambda expression is used for the `Supplier` function, the lambda needs to be explicitly
-cast. For example:
+the API or SPI. This affords API clients the convenience of mixing `Supplier` functions and other `Object` types when
+forming the log message. In case a lambda expression is used for the `Supplier` function, the lambda needs to be
+explicitly cast. For example:
 
 ```jshelllanguage
 logger.atInfo()

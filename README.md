@@ -116,9 +116,8 @@ logger.atInfo()
 Note that ELF4J is a facade, rather than implementation. As such,
 
 1. Nothing will be logging out (no-op) until you include an ELF4J logging provider JAR in the classpath. An API
-   client as in this sample can select or change to use any provider ([tinylog](https://github.com/elf4j/elf4j-tinylog)
-   , [LOG4J](https://github.com/elf4j/elf4j-log4j), ...) of the ELF4J SPI, at application deployment time, without code
-   change.
+   client as in this sample can select or change to use any provider (some currently available ones listed below) of the
+   ELF4J SPI, at application deployment time, without code change.
 2. At most one in-effect logging provider is expected:
 
 - The default and expected configuration setup is to ensure only one provider JAR present in the classpath, or no
@@ -219,7 +218,7 @@ public interface LoggerFactory {
 }
 ```
 
-#### Available ELF4J logging providers:
+## Available ELF4J logging providers
 
 - [tinylog provider](https://github.com/elf4j/elf4j-tinylog)
 - [LOG4J provider](https://github.com/elf4j/elf4j-log4j)

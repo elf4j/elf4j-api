@@ -121,7 +121,7 @@ logger.atInfo()
 Per the lambda expression syntax requirement, the downcast of `Supplier/Supplier<?>/Supplier<String>` here is necessary
 because this lambda is used as a parameter declared as an `Object` rather than a functional interface.
 
-## Use it...
+## For API clients...
 
 Note that ELF4J is a facade, rather than implementation. As such,
 
@@ -208,7 +208,7 @@ class ReadmeSample2 {
 }
 ```
 
-## Provide it...
+## For SPI providers...
 
 In terms of the [Java SPI](https://docs.oracle.com/javase/tutorial/sound/SPI-intro.html) setup, the Service and Service
 Provider Interface in this simple case is one and the same `LoggerFactory`. A logging provider of the ELF4J SPI should

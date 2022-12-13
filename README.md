@@ -121,7 +121,7 @@ logger.atInfo()
 Per the lambda expression syntax requirement, the downcast of `Supplier/Supplier<?>/Supplier<String>` here is necessary
 because this lambda is used as a parameter declared as an `Object` rather than a functional interface.
 
-## For API clients...
+## For API users...
 
 Note that ELF4J is a facade, rather than implementation. As such,
 

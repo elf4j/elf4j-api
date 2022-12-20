@@ -78,7 +78,11 @@ public interface Logger {
 
 ### Placeholder token
 
-The empty curly braces token `{}` is chosen to be the placeholder for message arguments.
+The empty curly braces token `{}` is chosen to be the placeholder for message arguments. e.g.
+
+```jshelllanguage
+Logger.instance("myLogger").atInfo().log("A log {} can have {}", "message", "arguments");
+```
 This is by convention, and does not syntactically appear in the API or SPI. Both the API user and the SPI provider
 must honor such convention.
 
@@ -112,10 +116,10 @@ allows for the API user to mix up `Supplier` and other `Object` types of argumen
 of `Logger#log(...)`, and get sensible outcome for the final log message:
 
 ```jshelllanguage
-logger.atInfo()
-        .log("A log message with arguments of mixed types: {} and {}",
-                "an Object type that is not a Supplier function",
-                (Supplier) () -> "a Supplier function type");
+logger.log("A log message's {} can be a mixture of {} types and other {} types",
+        "arguments",
+        (Supplier) () -> "Supplier function",
+        "Object");
 ```
 
 Per the lambda expression syntax requirement, the downcast of `Supplier/Supplier<?>/Supplier<String>` here is necessary

@@ -81,8 +81,9 @@ public interface Logger {
 The empty curly braces token `{}` is chosen to be the placeholder for message arguments. e.g.
 
 ```jshelllanguage
-Logger.instance("myLogger").atInfo().log("A log {} can have {}", "message", "arguments");
+logger.log("A log {} can have {}", "message", "arguments");
 ```
+
 This is by convention, and does not syntactically appear in the API or SPI. Both the API user and the SPI provider
 must honor such convention.
 

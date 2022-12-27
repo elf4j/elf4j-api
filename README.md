@@ -4,7 +4,7 @@
 
 API and SPI of Easy Logging Facade for Java (ELF4J)
 
-## User stories
+## User Stories
 
 1. As an application developer, I want to program logs of my application against an API, so that I can choose or
    change the actual logging implementation at the deployment time without code change.
@@ -17,7 +17,7 @@ API and SPI of Easy Logging Facade for Java (ELF4J)
 
 Java 8 or better
 
-## Get it...
+## Get It...
 
 From [![Maven Central](https://img.shields.io/maven-central/v/io.github.elf4j/elf4j-api.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.elf4j%22%20AND%20a:%22elf4j-api%22)
 as a compile-scope dependency
@@ -74,9 +74,9 @@ public interface Logger {
 }
 ```
 
-## Conventions, defaults, and implementation notes
+## Conventions, Defaults, and Implementation Notes
 
-### Placeholder token
+### Placeholder Token
 
 The empty curly braces token `{}` is chosen to be the placeholder for message arguments. e.g.
 
@@ -92,7 +92,7 @@ must honor such convention.
 An ELF4J `Logger` instance should be assumed immutable, thus thread-safe, by both the API client and the SPI provider.
 This applies, even and especially, to those instances returned by the fluent-style `Logger#at[Level]()` methods.
 
-### Logger name
+### Logger Name
 
 To get an ELF4J `Logger` instance, the API user may supply a name or class to suggest the name of the logger when
 calling the `Logger#instance(...)` methods. However, it is up to the SPI provider how, if at all, to use the
@@ -100,12 +100,12 @@ user-supplied value to determine the logger name. e.g. if the API user ends up p
 no-arg `Logger#instance()` method, then the name of the logger instance is undefined; the provider may opt to supply a
 default, e.g. the name of the caller class.
 
-### Log level
+### Log Level
 
 If the API user gets a `Logger` instance via `Logger#instance(...)` without specifying the log level via one of
 the `Logger#at[Level]()` methods, then the default log level is decided by the SPI provider.
 
-### `Supplier` functional arguments
+### `Supplier` Functional Arguments
 
 Any argument of `Object` type passed to the `Logger#log(...)` methods - either a log message or a placeholder
 replacement argument - must be treated specially if its actual type at runtime is `java.util.function.Supplier`. That
@@ -126,7 +126,7 @@ logger.log("A log message's {} can be a mixture of {} types and other {} types",
 Per the lambda expression syntax requirement, the downcast of `Supplier/Supplier<?>/Supplier<String>` here is necessary
 because this lambda is used as a parameter declared as an `Object` rather than a functional interface.
 
-## For API users...
+## For API Users...
 
 Note that ELF4J is a facade, rather than implementation. As such,
 
@@ -213,7 +213,7 @@ class ReadmeSample2 {
 }
 ```
 
-## For SPI providers...
+## For SPI Providers...
 
 In terms of the [Java SPI](https://docs.oracle.com/javase/tutorial/sound/SPI-intro.html) setup, the Service and Service
 Provider Interface in this simple case is one and the same `LoggerFactory`. A logging provider of the ELF4J SPI should
@@ -231,7 +231,7 @@ public interface LoggerFactory {
 }
 ```
 
-## Available logging service providers of the ELF4J SPI
+## Available Logging Service Providers of the ELF4J SPI
 
 - [tinylog provider](https://github.com/elf4j/elf4j-tinylog)
 - [LOG4J provider](https://github.com/elf4j/elf4j-log4j)

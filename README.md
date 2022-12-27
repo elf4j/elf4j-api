@@ -130,17 +130,25 @@ because this lambda is used as a parameter declared as an `Object` rather than a
 
 Note that ELF4J is a facade, rather than implementation. As such,
 
-- Nothing will be logging out (no-op) until you include an ELF4J logging provider JAR in the classpath. An API
-  client as in the sample below can select or change to
-  use [any logging service provider](https://github.com/elf4j/elf4j-api#available-logging-service-providers-of-the-elf4j-spi)
-  of the ELF4J SPI, at application deployment time, without code change.
-- At most one in-effect logging provider is expected:
-    - The default and expected configuration setup is to ensure only one provider JAR present in the classpath, or no
-      provider JAR when no-op is desired.
-    - Otherwise, if multiple provider JARs are present, the system property `elf4j.logger.factory.fqcn` can be used to
-      select the intended one. An intended provider absent from the classpath results in no-op.
-    - It is considered a configuration error to have multiple provider JARs in the classpath without a selection. ELF4J
-      falls back to no-op in all error scenarios.
+No-op by default:
+
+- Nothing will be logging out (no-op) unless an ELF4J logging provider JAR is discovered at application deploy time.
+
+At most one in-effect logging provider:
+
+- An API user can select or change to
+  use [any ELF4J service provider](https://github.com/elf4j/elf4j-api#available-logging-service-providers-of-the-elf4j-spi)
+  at deploy time, without code change.
+- The default and recommended setup is to ensure that either one or, in case no-op is desired, no provider JAR is
+  present in the classpath at deploy time. With such setup, nothing further needs to be done for the ELF4J API to work.
+- If multiple provider JARs are present, the Java system property `elf4j.logger.factory.fqcn` has to be used to select
+  the intended provider. e.g.
+  ```
+  java -jar MyApplication.jar -Delf4j.logger.factory.fqcn="elf4j.log4j.Log4jLoggerFactory"
+  ```
+  No-op if the selected provider JAR is absent from the classpath.
+- It is considered a setup error to have multiple provider JARs in the classpath without a selection. ELF4J falls back
+  to no-op in all error scenarios.
 
 ```java
 
@@ -150,9 +158,7 @@ class ReadmeSample {
 
     @Test
     void messagesArgsAndGuards() {
-        logger.log("logger name {} is usually the same as the param class name {}",
-                logger.getName(),
-                ReadmeSample.class.getName());
+        logger.log("logger name is usually the same as the param class name");
         assertEquals(ReadmeSample.class.getName(), logger.getName());
         logger.log("default log level is {}, which depends on the individual logging provider", logger.getLevel());
         Logger info = logger.atInfo();
@@ -215,11 +221,10 @@ class ReadmeSample2 {
 
 ## For SPI Providers...
 
-In terms of the [Java SPI](https://docs.oracle.com/javase/tutorial/sound/SPI-intro.html) setup, the Service and Service
-Provider Interface in this simple case is one and the same `LoggerFactory`. A logging provider of the ELF4J SPI should
-supply complete and concrete implementation (including both `LoggerFactory` and `Logger`) such that the ELF4J client
-application can discover and load the provider implementation using
-the [ServiceLoader](https://docs.oracle.com/javase/8/docs/api/java/util/ServiceLoader.html).
+As with the [Java SPI](https://docs.oracle.com/javase/tutorial/ext/basics/spi.html) mechanism, the logging Service
+Provider should supply a concrete implementation of both the provider class for the `LoggerFactory` SPI and the service
+class for the `Logger` API, such that the ELF4J API client application can discover and load the provider implementation
+using the JDK [ServiceLoader](https://docs.oracle.com/javase/8/docs/api/java/util/ServiceLoader.html).
 
 ```java
 public interface LoggerFactory {

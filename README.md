@@ -222,9 +222,10 @@ class ReadmeSample2 {
 ## For SPI Providers...
 
 As with the [Java SPI](https://docs.oracle.com/javase/tutorial/ext/basics/spi.html) mechanism, the logging Service
-Provider should supply a concrete implementation of both the provider class for the `LoggerFactory` SPI and the service
-class for the `Logger` API, such that the ELF4J API client application can discover and load the provider implementation
-using the JDK [ServiceLoader](https://docs.oracle.com/javase/8/docs/api/java/util/ServiceLoader.html).
+Provider should supply a concrete and complete implementation, including both the provider class for the `LoggerFactory`
+SPI and the service class for the `Logger` API, such that the ELF4J API client application can discover and load the
+provider implementation using the
+JDK [ServiceLoader](https://docs.oracle.com/javase/8/docs/api/java/util/ServiceLoader.html).
 
 ```java
 public interface LoggerFactory {

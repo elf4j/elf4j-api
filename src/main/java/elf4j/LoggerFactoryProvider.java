@@ -46,11 +46,11 @@ enum LoggerFactoryProvider {
     }
 
     private static Optional<String> getSystemConfiguredLoggerFactoryFqcn() {
-        String intendedLoggerFactoryClassName = System.getProperty(ELF4J_LOGGER_FACTORY_FQCN);
-        if (intendedLoggerFactoryClassName == null || intendedLoggerFactoryClassName.trim().isEmpty()) {
+        String desiredLoggerFactoryFqcn = System.getProperty(ELF4J_LOGGER_FACTORY_FQCN);
+        if (desiredLoggerFactoryFqcn == null || desiredLoggerFactoryFqcn.trim().isEmpty()) {
             return Optional.empty();
         }
-        return Optional.of(intendedLoggerFactoryClassName.trim());
+        return Optional.of(desiredLoggerFactoryFqcn.trim());
     }
 
     LoggerFactory loggerFactory() {

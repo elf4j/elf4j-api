@@ -65,20 +65,21 @@ enum LoggerFactoryProvider {
         }
         Optional<String> systemConfiguredLoggerFactoryClassName = getSystemConfiguredLoggerFactoryClassName();
         if (systemConfiguredLoggerFactoryClassName.isPresent()) {
-            String intendedLoggerFactory = systemConfiguredLoggerFactoryClassName.get();
+            String desiredLoggerFactory = systemConfiguredLoggerFactoryClassName.get();
             for (LoggerFactory loaded : loadedFactories) {
-                if (intendedLoggerFactory.equals(loaded.getClass().getName())) {
-                    julLogger.log(Level.INFO, "intended ELF4J logger factory discovered: {0}", loaded);
+                if (desiredLoggerFactory.equals(loaded.getClass().getName())) {
+                    julLogger.log(Level.INFO, "desired ELF4J logger factory discovered: {0}", loaded);
                     return loaded;
                 }
             }
-            julLogger.log(Level.WARNING,
-                    "intended ELF4J logger factory [{0}] not found in discovered factories: {1}, falling back to NO-OP logging...",
-                    new Object[] { intendedLoggerFactory, loadedFactories });
+            julLogger.log(Level.SEVERE,
+                    "configuration error! desired ELF4J logger factory [{0}] not found in discovered factories: {1}. falling back to NO-OP logging...",
+                    new Object[] { desiredLoggerFactory, loadedFactories });
             return NoopLoggerFactory.INSTANCE;
         }
         if (loadedFactories.isEmpty()) {
-            julLogger.warning("no ELF4J logger factory discovered, falling back to NO-OP logging...");
+            julLogger.log(Level.WARNING,
+                    "no ELF4J logger factory discovered; this is OK if NO-OP logging is desired. falling back to NO-OP logging...");
             return NoopLoggerFactory.INSTANCE;
         }
         if (loadedFactories.size() == 1) {
@@ -87,8 +88,8 @@ enum LoggerFactoryProvider {
             return provisionedLoggerFactory;
         }
         julLogger.log(Level.SEVERE,
-                "configuration error: expected one single provisioned logger factory but discovered {0}: {1}, falling back to NO-OP logging...",
-                new Object[] { loadedFactories.size(), loadedFactories });
+                "configuration error! expected at most one single in-effect ELF4J logger factory but discovered {0}: {1}. re-configure to provision at most one factory, or select the desired one using the `{2}` system property. falling back to NO-OP logging...",
+                new Object[] { loadedFactories.size(), loadedFactories, ELF4J_LOGGER_FACTORY_FQCN });
         return NoopLoggerFactory.INSTANCE;
     }
 }

@@ -28,8 +28,11 @@ package elf4j.spi;
 import elf4j.Logger;
 
 /**
- * Service interface a logging provider has to implement. See the <a
- * href="https://docs.oracle.com/javase/tutorial/sound/SPI-intro.html">Java SPI intro</a>
+ * Service Provider Interface for the ELF4J logging provider. A provider implementation class of this SPI needs to be
+ * loadable by {@link java.util.ServiceLoader}.
+ *
+ * @see <a href="https://docs.oracle.com/javase/7/docs/api/java/util/ServiceLoader.html">Javadoc of
+ *         ServiceLoader</a>
  */
 public interface LoggerFactory {
     /**
@@ -38,15 +41,16 @@ public interface LoggerFactory {
     Logger logger();
 
     /**
-     * @param name Client proposed name of the returned Logger instance. It's up to the provider whether to honor the
+     * @param name Client proposed name of the Logger instance returned. It's up to the provider whether to honor the
      *             logger name as requested although, usually, the name request is honored verbatim.
      * @return Logger instance with the requested name
      */
     Logger logger(String name);
 
     /**
-     * @param clazz Class that requested the Logger instance. It's up to the provider how, if at all, to use the class
-     *              to name the logger. Usually the fully qualified class name is used to name the logger.
+     * @param clazz used to suggest the name of the Logger instance returned. It's up to the provider how, if at all, to
+     *              use the class to name the logger. Usually the fully qualified class name is used to name the
+     *              logger.
      * @return Logger instance of the requesting class
      */
     Logger logger(Class<?> clazz);

@@ -141,7 +141,7 @@ At most one in-effect logging provider:
   use [any ELF4J service provider](https://github.com/elf4j/elf4j-api#available-logging-service-providers-of-the-elf4j-spi)
   at deploy time, without code change.
 - The default and recommended setup is to ensure that only the one desired logging provider JAR is present in the
-  classpath at deploy time. (Or, no provider JAR if no-op is desired). With such zero-or-one-provider setup, nothing
+  classpath at deploy time, or, no provider JAR if no-op is desired. With such zero-or-one-provider setup, nothing
   further is needed for the ELF4J API to work.
 - If multiple provider JARs are present, the Java system property `elf4j.logger.factory.fqcn` has to be used to select
   the desired provider. e.g.

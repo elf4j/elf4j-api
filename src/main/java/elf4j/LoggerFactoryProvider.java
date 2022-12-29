@@ -88,11 +88,11 @@ enum LoggerFactoryProvider {
         }
         if (loadedFactories.size() == 1) {
             LoggerFactory provisionedLoggerFactory = loadedFactories.get(0);
-            julLogger.log(Level.INFO, "provisioned ELF4J logger factory discovered: {0}", provisionedLoggerFactory);
+            julLogger.log(Level.INFO, "successfully discovered ELF4J logger factory: {0}", provisionedLoggerFactory);
             return provisionedLoggerFactory;
         }
         julLogger.log(Level.SEVERE,
-                "configuration error! expected at most one single in-effect ELF4J logger factory but discovered {0}: {1}. re-configure to provision at most one factory, or select the desired one using the `{2}` system property. falling back to NO-OP logging...",
+                "configuration error! expected zero or one ELF4J logger factory but discovered {0}: {1}. please either re-configure, or select the desired factory using the `{2}` system property. falling back to NO-OP logging...",
                 new Object[] { loadedFactories.size(), loadedFactories, ELF4J_LOGGER_FACTORY_FQCN });
         return new NoopLoggerFactory();
     }

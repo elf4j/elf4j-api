@@ -34,18 +34,18 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 class NoopLoggerTest {
 
     @Nested
-    class isEnabled {
-        @Test
-        void noLevelEnabled() {
-            assertFalse(NoopLogger.INSTANCE.isEnabled());
-        }
-    }
-
-    @Nested
     class getName {
         @Test
         void instanceToString() {
             assertEquals(NoopLogger.INSTANCE.getClass().getName(), NoopLogger.INSTANCE.getName());
+        }
+    }
+
+    @Nested
+    class isEnabled {
+        @Test
+        void noLevelEnabled() {
+            assertFalse(NoopLogger.INSTANCE.isEnabled());
         }
     }
 }

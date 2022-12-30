@@ -38,22 +38,7 @@ public enum NoopLogger implements Logger {
     INSTANCE;
 
     @Override
-    public Logger atTrace() {
-        return this;
-    }
-
-    @Override
     public Logger atDebug() {
-        return this;
-    }
-
-    @Override
-    public Logger atInfo() {
-        return this;
-    }
-
-    @Override
-    public Logger atWarn() {
         return this;
     }
 
@@ -63,13 +48,28 @@ public enum NoopLogger implements Logger {
     }
 
     @Override
-    public String getName() {
-        return NoopLogger.INSTANCE.getClass().getName();
+    public Logger atInfo() {
+        return this;
+    }
+
+    @Override
+    public Logger atTrace() {
+        return this;
+    }
+
+    @Override
+    public Logger atWarn() {
+        return this;
     }
 
     @Override
     public Level getLevel() {
         return Level.OFF;
+    }
+
+    @Override
+    public String getName() {
+        return NoopLogger.INSTANCE.getClass().getName();
     }
 
     @Override

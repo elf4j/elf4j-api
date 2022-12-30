@@ -55,29 +55,14 @@ public interface Logger {
     }
 
     /**
-     * @return name of the logger instance
-     */
-    String getName();
-
-    /**
-     * @return log Level of the logger instance
-     */
-    Level getLevel();
-
-    /**
-     * @return true if the Logger instance is configured to be active per its name and Level, false otherwise
-     */
-    boolean isEnabled();
-
-    /**
-     * @return Logger instance with the same name, and TRACE log level
-     */
-    Logger atTrace();
-
-    /**
      * @return Logger instance with the same name, and DEBUG log level
      */
     Logger atDebug();
+
+    /**
+     * @return Logger instance with the same name, and ERROR log level
+     */
+    Logger atError();
 
     /**
      * @return Logger instance with the same name, and INFO log level
@@ -85,14 +70,29 @@ public interface Logger {
     Logger atInfo();
 
     /**
+     * @return Logger instance with the same name, and TRACE log level
+     */
+    Logger atTrace();
+
+    /**
      * @return Logger instance with the same name, and WARN log level
      */
     Logger atWarn();
 
     /**
-     * @return Logger instance with the same name, and ERROR log level
+     * @return log Level of the logger instance
      */
-    Logger atError();
+    Level getLevel();
+
+    /**
+     * @return name of the logger instance
+     */
+    String getName();
+
+    /**
+     * @return true if the Logger instance is configured to be active per its name and Level, false otherwise
+     */
+    boolean isEnabled();
 
     /**
      * @param message to be logged. If the actual type is {@link java.util.function.Supplier}, the result of

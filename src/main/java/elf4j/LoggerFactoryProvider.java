@@ -68,7 +68,7 @@ enum LoggerFactoryProvider {
         if (loadedFactories.size() == 1) {
             LoggerFactory provisionedLoggerFactory = loadedFactories.get(0);
             julLogger.log(Level.INFO,
-                    "setup success. by provision, using ELF4J logger factory : {0}",
+                    "setup success. by provision, using ELF4J logger factory: {0}",
                     provisionedLoggerFactory);
             return provisionedLoggerFactory;
         }

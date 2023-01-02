@@ -36,7 +36,7 @@ import java.util.logging.Level;
 
 enum LoggerFactoryProvider {
     INSTANCE;
-    private static final String ELF4J_LOGGER_FACTORY_FQCN = "elf4j.logger.factory.fqcn";
+    static final String ELF4J_LOGGER_FACTORY_FQCN = "elf4j.logger.factory.fqcn";
     private final java.util.logging.Logger internalLogger =
             java.util.logging.Logger.getLogger(LoggerFactoryProvider.class.getName());
     private final LoggerFactory loggerFactory;

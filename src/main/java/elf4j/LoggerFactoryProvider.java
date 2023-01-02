@@ -92,7 +92,7 @@ enum LoggerFactoryProvider {
             return provisionedLoggerFactory;
         }
         internalLogger.log(Level.SEVERE,
-                "configuration error! expected zero or one ELF4J logger factory but discovered {0}: {1}. please either re-configure, or select the desired factory by using the `{2}` system property. falling back to NO-OP logging...",
+                "configuration error! expected zero or one ELF4J logger factory but discovered {0}: {1}. please either re-provision zero or one factory in the classpath, or select the desired one by using the `{2}` system property. falling back to NO-OP logging...",
                 new Object[] { loadedFactories.size(), loadedFactories, ELF4J_LOGGER_FACTORY_FQCN });
         return new NoopLoggerFactory();
     }

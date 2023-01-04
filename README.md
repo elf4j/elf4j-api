@@ -89,8 +89,8 @@ must honor such convention.
 
 ### Immutability
 
-An ELF4J `Logger` instance should be assumed immutable, thus thread-safe, by both the API client and the SPI provider.
-This applies, even and especially, to those instances returned by the fluent-style `Logger#at[Level]()` methods.
+The API client should assume any ELF4J `Logger` instance is immutable, thus thread-safe. The SPI provider implementation
+must support such assumption.
 
 ### Logger Name
 
@@ -102,23 +102,23 @@ default, e.g. the name of the caller class.
 
 ### Log Level
 
-If the API user gets a `Logger` instance via `Logger#instance(...)` without specifying the log level via one of
-the `Logger#at[Level]()` methods, then the default log level is decided by the SPI provider.
+If the API user gets a `Logger` instance via a `Logger#instance(...)` method, the default log level of such instance is
+decided by the SPI provider implementation. If the API user gets a `Logger` instance via a `Logger#at[Level]()` method,
+then the SPI provider should supply such instance with the requested level.
 
 ### `Supplier` Functional Arguments
 
-Any argument of `Object` type passed to the `Logger#log(...)` methods - either a log message or a placeholder
-replacement argument - must be treated specially if its actual type at runtime is `java.util.function.Supplier`. That
-is, the result of `Supplier#get()`, instead of the `Supplier` function itself, should be used to compute the final log
-message.
+An `Object`-type argument passed to any of the `Logger#log(...)` methods must be treated specially if the actual type at
+runtime is `java.util.function.Supplier`. That is, the result of `Supplier#get()`, instead of the `Supplier` function
+itself, should be used to compute the final log message.
 
 This special handling of `Supplier` arguments is by convention, and not syntactically enforced by the API or SPI. This
 allows for the API user to mix up `Supplier` and other `Object` types of arguments within the same call
 of `Logger#log(...)`, and get sensible outcome for the final log message:
 
 ```jshelllanguage
-logger.log("A log message's {} can be a mixture of {} types and other {} types",
-        "arguments",
+logger.log(
+        "A Logger#log(...) method's arguments of Object type can be a mixture of {} type and other {} types, with sensible logging message result.",
         (Supplier) () -> "Supplier function",
         "Object");
 ```

@@ -37,9 +37,9 @@ import java.util.logging.Level;
 enum LoggerFactoryProvider {
     INSTANCE;
     static final String ELF4J_LOGGER_FACTORY_FQCN = "elf4j.logger.factory.fqcn";
-    private final java.util.logging.Logger internalLogger =
-            java.util.logging.Logger.getLogger(LoggerFactoryProvider.class.getName());
     private final LoggerFactory loggerFactory;
+    private final java.util.logging.Logger utilLogger =
+            java.util.logging.Logger.getLogger(LoggerFactoryProvider.class.getName());
 
     LoggerFactoryProvider() {
         this.loggerFactory = getLoggerFactory();
@@ -68,30 +68,28 @@ enum LoggerFactoryProvider {
         if (desiredLoggerFactoryFqcn.isPresent()) {
             for (LoggerFactory loaded : loadedFactories) {
                 if (loaded.getClass().getName().equals(desiredLoggerFactoryFqcn.get())) {
-                    internalLogger.log(Level.INFO,
-                            "setup success. as selected, using ELF4J logger factory: {0}",
-                            loaded);
+                    utilLogger.log(Level.INFO, "setup success. as selected, using ELF4J logger factory: {0}", loaded);
                     return loaded;
                 }
             }
-            internalLogger.log(Level.SEVERE,
+            utilLogger.log(Level.SEVERE,
                     "configuration error! desired ELF4J logger factory [{0}] not found in discovered factories: {1}. falling back to NO-OP logging...",
                     new Object[] { desiredLoggerFactoryFqcn.get(), loadedFactories });
             return new NoopLoggerFactory();
         }
         if (loadedFactories.isEmpty()) {
-            internalLogger.log(Level.WARNING,
-                    "no ELF4J logger factory discovered; this is OK only if NO-OP logging is desired. falling back to NO-OP logging...");
+            utilLogger.log(Level.WARNING,
+                    "no ELF4J logger factory discovered - this is OK only if no logging is desired. falling back to NO-OP logging...");
             return new NoopLoggerFactory();
         }
         if (loadedFactories.size() == 1) {
             LoggerFactory provisionedLoggerFactory = loadedFactories.get(0);
-            internalLogger.log(Level.INFO,
+            utilLogger.log(Level.INFO,
                     "setup success. as provisioned, using ELF4J logger factory: {0}",
                     provisionedLoggerFactory);
             return provisionedLoggerFactory;
         }
-        internalLogger.log(Level.SEVERE,
+        utilLogger.log(Level.SEVERE,
                 "configuration error! expected zero or one ELF4J logger factory but discovered {0}: {1}. please either re-provision zero or one factory in the classpath, or select the desired one by using the `{2}` system property. falling back to NO-OP logging...",
                 new Object[] { loadedFactories.size(), loadedFactories, ELF4J_LOGGER_FACTORY_FQCN });
         return new NoopLoggerFactory();

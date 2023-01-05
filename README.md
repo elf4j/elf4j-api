@@ -76,7 +76,7 @@ public interface Logger {
 
 ## Conventions, Defaults, and Implementation Notes
 
-### Placeholder Token
+- Placeholder Token
 
 The empty curly braces token `{}` is chosen to be the placeholder for message arguments. e.g.
 
@@ -87,12 +87,12 @@ logger.log("A log {} can have {}", "message", "arguments");
 This is by convention, and does not syntactically appear in the API or SPI. Both the API user and the SPI provider
 must honor such convention.
 
-### Immutability
+- Immutability
 
 The API client should assume any ELF4J `Logger` instance is immutable, thus thread-safe. The SPI provider implementation
 must support such assumption.
 
-### Logger Name
+- Logger Name
 
 To get an ELF4J `Logger` instance, the API user may supply a name or class to suggest the name of the logger when
 calling the `Logger#instance(...)` methods. However, it is up to the SPI provider how, if at all, to use the
@@ -100,13 +100,13 @@ user-supplied value to determine the logger name. e.g. if the API user ends up p
 no-arg `Logger#instance()` method, then the name of the logger instance is undefined; the provider may opt to supply a
 default, e.g. the name of the caller class.
 
-### Log Level
+- Log Level
 
 If the API user gets a `Logger` instance via a `Logger#instance(...)` method, the default log level of such instance is
 decided by the SPI provider implementation. If the API user gets a `Logger` instance via a `Logger#at[Level]()` method,
 then the SPI provider should supply such instance with the requested level.
 
-### `Supplier` Functional Arguments
+- `Supplier` Functional Arguments
 
 An `Object`-type argument passed to any of the `Logger#log(...)` methods must be treated specially if the actual type at
 runtime is `java.util.function.Supplier`. That is, the result of `Supplier#get()`, instead of the `Supplier` function

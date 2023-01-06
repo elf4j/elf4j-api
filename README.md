@@ -154,16 +154,16 @@ Only one in-effect logging provider:
 
 ```java
 
-@Nested
 class ReadmeSample {
-    private final Logger logger = Logger.instance(ReadmeSample.class);
+    private final Logger defaultLogger = Logger.instance();
 
     @Test
     void messagesArgsAndGuards() {
-        logger.log("logger name is usually the same as the param class name");
-        assertEquals(ReadmeSample.class.getName(), logger.getName());
-        logger.log("default log level is {}, which depends on the individual logging provider", logger.getLevel());
-        Logger info = logger.atInfo();
+        defaultLogger.log("default logger name is usually the same as the API caller class name");
+        assertEquals(ReadmeSample.class.getName(), defaultLogger.getName());
+        defaultLogger.log("default log level is {}, which depends on the individual logging provider",
+                defaultLogger.getLevel());
+        Logger info = defaultLogger.atInfo();
         info.log("level set omitted here but we know the level is {}", INFO);
         assertEquals(INFO, info.getLevel());
         info.log("Supplier and other Object args can be mixed: Object arg1 {}, Supplier arg2 {}, Object arg3 {}",
@@ -178,15 +178,15 @@ class ReadmeSample {
         assertEquals(info.getName(), info.atWarn().getName(), "same name, only level is different");
         assertEquals(INFO, info.getLevel(), "immutable info's level never changes");
 
-        if (logger.atDebug().isEnabled()) {
-            logger.atDebug()
+        if (defaultLogger.atDebug().isEnabled()) {
+            defaultLogger.atDebug()
                     .log("a {} message guarded by a {}, so that no {} is created unless this logger instance - name and level combined - is {}",
                             "long and expensive-to-construct",
                             "level check",
                             "message object",
                             "enabled by system configuration of the logging provider");
         }
-        logger.atDebug()
+        defaultLogger.atDebug()
                 .log((Supplier) () -> "alternative to the level guard, using a Supplier<?> function like this should achieve the same goal of avoiding unnecessary message creation, pending quality of the logging provider");
     }
 }

@@ -176,6 +176,7 @@ class ReadmeSample {
                         "`info`");
         assertNotSame(info, info.atWarn());
         assertEquals(info.getName(), info.atWarn().getName(), "same name, only level is different");
+        assertEquals(WARN, info.atWarn().getLevel());
         assertEquals(INFO, info.getLevel(), "immutable info's level never changes");
 
         if (defaultLogger.atDebug().isEnabled()) {

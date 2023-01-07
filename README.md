@@ -132,8 +132,8 @@ Note that ELF4J is a facade, rather than implementation. As such,
 
 No-op by default:
 
-- Nothing will be logging out (no-op) unless an external ELF4J logging provider is discovered at application deploy
-  time. The only/default implementation shipped with the ELF4J facade itself is the no-op provider.
+- Nothing will be logging out (no-op) unless a properly configured external ELF4J logging provider is discovered at the
+  application start time. The only/default implementation shipped with the ELF4J facade itself is the no-op provider.
 
 Only one in-effect logging provider:
 

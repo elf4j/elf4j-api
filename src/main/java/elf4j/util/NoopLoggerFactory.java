@@ -28,7 +28,7 @@ import elf4j.Logger;
 import elf4j.spi.LoggerFactory;
 
 /**
- * Default implementation of {@link LoggerFactory} that produces no-op Logger instance
+ * Default implementation of {@link LoggerFactory} SPI. Produces the default {@link NoopLogger} instance.
  */
 public final class NoopLoggerFactory implements LoggerFactory {
 

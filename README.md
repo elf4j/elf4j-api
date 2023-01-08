@@ -84,18 +84,18 @@ The empty curly braces token `{}` is chosen to be the placeholder for message ar
 logger.log("A log {} can have {}", "message", "arguments");
 ```
 
-This is by convention, and does not syntactically appear in the API or SPI. Both the API user and the SPI provider
+This is by convention, and does not syntactically appear in the API or SPI. Both the API user and the Service Provider
 must honor such convention.
 
 - Immutability
 
-The API client should assume any ELF4J `Logger` instance is immutable, thus thread-safe. The SPI provider implementation
-must support such assumption.
+The API client should assume any ELF4J `Logger` instance is immutable, thus thread-safe. The Service Provider
+implementation must support such assumption.
 
 - Logger Name
 
 To get an ELF4J `Logger` instance, the API user may supply a name or class to suggest the name of the logger when
-calling the `Logger#instance(...)` methods. However, it is up to the SPI provider how, if at all, to use the
+calling the `Logger#instance(...)` methods. However, it is up to the Service Provider how, if at all, to use the
 user-supplied value to determine the logger name. e.g. if the API user ends up passing in `null` or using the
 no-arg `Logger#instance()` method, then the name of the logger instance is undefined; the provider may opt to supply a
 default, e.g. the name of the caller class.
@@ -103,8 +103,8 @@ default, e.g. the name of the caller class.
 - Log Level
 
 If the API user gets a `Logger` instance via a `Logger#instance(...)` method, the default log level of such instance is
-decided by the SPI provider implementation. If the API user gets a `Logger` instance via a `Logger#at[Level]()` method,
-then the SPI provider should supply such instance with the requested level.
+decided by the Service Provider implementation. If the API user gets a `Logger` instance via a `Logger#at[Level]()`
+method, then the Service Provider should supply such instance with the requested level.
 
 - `Supplier` Functional Arguments
 
@@ -227,8 +227,8 @@ class ReadmeSample2 {
 As with the [Java Service Provider Framework](https://docs.oracle.com/javase/8/docs/api/java/util/ServiceLoader.html),
 the logging Service Provider should supply a concrete and complete implementation, including both the provider class for
 the `LoggerFactory` [SPI](https://docs.oracle.com/javase/tutorial/ext/basics/spi.html) and the service class for
-the `Logger` API, such that the ELF4J API client application can discover and load the provider implementation using the
-`java.util.ServiceLoader`.
+the `Logger` API, such that the ELF4J API client application can discover and load the provider implementation using
+the `java.util.ServiceLoader`.
 
 ```java
 public interface LoggerFactory {

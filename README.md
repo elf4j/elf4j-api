@@ -102,9 +102,9 @@ default, e.g. the name of the caller class.
 
 - Log Level
 
-If the API user gets a `Logger` instance via a `Logger#instance(...)` method call, the default log level of such
-instance is decided by the Service Provider implementation. If the API user gets a `Logger` instance via
-a `Logger#at[Level]()` method call, then the Service Provider should supply such instance with the requested level.
+If the API user gets a `Logger` instance via a `Logger#instance(...)` call, the default log level of such instance is
+decided by the Service Provider implementation. If the API user gets a `Logger` instance via a `Logger#at[Level]()`
+call, then the Service Provider should supply such instance with the requested level.
 
 - `Supplier` Functional Arguments
 

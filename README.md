@@ -30,7 +30,7 @@ as a compile-scope dependency
 </dependency>
 ```
 
-## The Logger API
+## The Logger Service Interface And Access API
 
 ```java
 public interface Logger {
@@ -74,7 +74,7 @@ public interface Logger {
 }
 ```
 
-## Conventions, Defaults, and Implementation Notes
+## Conventions, Defaults, And Implementation Notes
 
 - Placeholder Token
 
@@ -222,13 +222,13 @@ class ReadmeSample2 {
 }
 ```
 
-## For SPI Providers...
+## For Service Providers...
 
-As with the [Java SPI](https://docs.oracle.com/javase/tutorial/ext/basics/spi.html) mechanism, the logging Service
-Provider should supply a concrete and complete implementation, including both the provider class for the `LoggerFactory`
-SPI and the service class for the `Logger` API, such that the ELF4J API client application can discover and load the
-provider implementation using the
-JDK [ServiceLoader](https://docs.oracle.com/javase/8/docs/api/java/util/ServiceLoader.html).
+As with the [Java Service Provider Framework](https://docs.oracle.com/javase/8/docs/api/java/util/ServiceLoader.html),
+the logging Service Provider should supply a concrete and complete implementation, including both the provider class for
+the `LoggerFactory` [SPI](https://docs.oracle.com/javase/tutorial/ext/basics/spi.html) and the service class for
+the `Logger` API, such that the ELF4J API client application can discover and load the provider implementation using the
+`java.util.ServiceLoader`.
 
 ```java
 public interface LoggerFactory {
@@ -240,7 +240,7 @@ public interface LoggerFactory {
 }
 ```
 
-## Available Logging Service Providers of the ELF4J SPI
+## Available Logging Service Providers Of The ELF4J SPI
 
 - [tinylog provider](https://github.com/elf4j/elf4j-tinylog)
 - [LOG4J provider](https://github.com/elf4j/elf4j-log4j)

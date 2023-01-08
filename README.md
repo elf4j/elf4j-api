@@ -102,18 +102,18 @@ default, e.g. the name of the caller class.
 
 - Log Level
 
-If the API user gets a `Logger` instance via a `Logger#instance(...)` method, the default log level of such instance is
-decided by the Service Provider implementation. If the API user gets a `Logger` instance via a `Logger#at[Level]()`
-method, then the Service Provider should supply such instance with the requested level.
+If the API user gets a `Logger` instance via a `Logger#instance(...)` method call, the default log level of such
+instance is decided by the Service Provider implementation. If the API user gets a `Logger` instance via
+a `Logger#at[Level]()` method call, then the Service Provider should supply such instance with the requested level.
 
 - `Supplier` Functional Arguments
 
 An `Object`-type argument passed to any of the `Logger#log(...)` methods must be treated specially if the actual type at
 runtime is `java.util.function.Supplier`. That is, the result of `Supplier#get()`, instead of the `Supplier` function
-itself, should be used to compute the final log message.
+itself, should be used when computing the final log message.
 
-This special handling of `Supplier` arguments is by convention, and not syntactically enforced by the API or SPI. This
-allows for the API user to mix up `Supplier` and other `Object` types of arguments within the same call
+This special handling of `Supplier`-type arguments is by convention, and not syntactically enforced by the API or SPI.
+This allows for the API user to mix up `Supplier` and other `Object` types of arguments within the same call
 of `Logger#log(...)`, and get sensible outcome for the final log message:
 
 ```jshelllanguage
